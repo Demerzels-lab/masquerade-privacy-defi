@@ -25,7 +25,7 @@ export default function Settings() {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Settings</h1>
-            <p className="text-neutral-300">Manage privacy controls, security, dan agent permissions</p>
+            <p className="text-neutral-300">Manage privacy controls, security, and agent permissions</p>
           </div>
 
           <div className="space-y-6">
@@ -71,7 +71,7 @@ export default function Settings() {
                     <Eye className="w-5 h-5 text-accent-500" />
                     <div>
                       <p className="font-medium">Auto Transaction Mixing</p>
-                      <p className="text-sm text-neutral-300">Automatically mix transactions untuk enhanced privacy</p>
+                      <p className="text-sm text-neutral-300">Automatically mix transactions for enhanced privacy</p>
                     </div>
                   </div>
                   <button
@@ -93,7 +93,7 @@ export default function Settings() {
                     <Lock className="w-5 h-5 text-primary-500" />
                     <div>
                       <p className="font-medium">Require ZK Proof</p>
-                      <p className="text-sm text-neutral-300">Require ZK proof verification untuk semua transaksi</p>
+                      <p className="text-sm text-neutral-300">Require ZK proof verification for all transactions</p>
                     </div>
                   </div>
                   <button
@@ -125,7 +125,7 @@ export default function Settings() {
                     <Bell className="w-5 h-5 text-accent-500" />
                     <div>
                       <p className="font-medium">Transaction Notifications</p>
-                      <p className="text-sm text-neutral-300">Get notified untuk semua transaction activities</p>
+                      <p className="text-sm text-neutral-300">Get notified for all transaction activities</p>
                     </div>
                   </div>
                   <button

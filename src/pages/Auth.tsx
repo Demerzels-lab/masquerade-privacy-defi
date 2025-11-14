@@ -23,7 +23,7 @@ export default function Auth() {
 
   const generateZKProof = async () => {
     if (!account || !signer) {
-      alert('Silakan connect wallet terlebih dahulu');
+      alert('Please connect wallet first');
       return;
     }
 
@@ -80,9 +80,9 @@ export default function Auth() {
   };
 
   const privacyFeatures = [
-    'Wallet Signature - Cryptographic proof dari wallet ownership',
+    'Wallet Signature - Cryptographic proof of wallet ownership',
     'Zero-knowledge Commitment - Hash-based privacy preservation', 
-    'Stealth Address - Unique anonymous identity untuk setiap session',
+    'Stealth Address - Unique anonymous identity for each session',
   ];
 
   return (
@@ -100,7 +100,7 @@ export default function Auth() {
             </div>
             <h1 className="text-3xl font-bold mb-2">Web3 Authentication</h1>
             <p className="text-neutral-300">
-              Connect wallet dan generate ZK proof untuk anonymous authentication
+              Connect wallet and generate ZK proof for anonymous authentication
             </p>
           </div>
 
@@ -167,7 +167,7 @@ export default function Auth() {
               {!account && (
                 <div className="mt-4 p-3 bg-semantic-warning/10 rounded-lg border border-semantic-warning/20">
                   <p className="text-xs text-semantic-warning">
-                    <strong>Note:</strong> Anda memerlukan MetaMask extension. Install dari{' '}
+                    <strong>Note:</strong> You need MetaMask extension. Install from{' '}
                     <a href="https://metamask.io" target="_blank" rel="noopener noreferrer" className="underline">
                       metamask.io
                     </a>
@@ -181,7 +181,7 @@ export default function Auth() {
                 <Check className="w-8 h-8 text-semantic-success" />
               </div>
               <h3 className="text-xl font-semibold mb-2 text-semantic-success">Verified!</h3>
-              <p className="text-neutral-300 mb-4">ZK Proof berhasil diverifikasi</p>
+              <p className="text-neutral-300 mb-4">ZK Proof successfully verified</p>
               
               {stealthAddress && (
                 <div className="p-4 bg-neutral-50 rounded-lg border border-semantic-success/20 mb-4">
@@ -203,7 +203,7 @@ export default function Auth() {
         </div>
 
         <div className="mt-6 text-center text-sm text-neutral-300">
-          <p>Authentication menggunakan wallet signature untuk privacy preservation</p>
+          <p>Authentication uses wallet signature for privacy preservation</p>
         </div>
       </motion.div>
     </div>

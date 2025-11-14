@@ -24,7 +24,7 @@ export default function Pools() {
     {
       value: 'maximum',
       label: 'Maximum',
-      description: 'Maximum anonymity dengan multiple hops',
+      description: 'Maximum anonymity with multiple hops',
       anonymitySet: '1000+ users',
     },
   ];
@@ -58,7 +58,7 @@ export default function Pools() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-2">Privacy Pools</h1>
-            <p className="text-neutral-300">Transaction mixing dan stealth addresses untuk enhanced anonymity</p>
+            <p className="text-neutral-300">Transaction mixing and stealth addresses for enhanced anonymity</p>
           </div>
 
           {/* Pool Stats */}
@@ -140,15 +140,15 @@ export default function Pools() {
                   <ul className="space-y-2 text-sm text-neutral-300">
                     <li className="flex items-start">
                       <span className="text-semantic-success mr-2">✓</span>
-                      <span>Unique address untuk setiap transaksi</span>
+                      <span>Unique address for each transaction</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-semantic-success mr-2">✓</span>
-                      <span>Tidak terlacak ke identity asli</span>
+                      <span>Not traceable to original identity</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-semantic-success mr-2">✓</span>
-                      <span>ZK proof untuk ownership verification</span>
+                      <span>ZK proof for ownership verification</span>
                     </li>
                   </ul>
                 </div>
@@ -173,7 +173,7 @@ export default function Pools() {
                 ) : (
                   <div className="p-8 bg-neutral-100 rounded-lg border border-neutral-400/20 text-center">
                     <Eye className="w-12 h-12 text-neutral-300 mx-auto mb-3" />
-                    <p className="text-sm text-neutral-300">Generate stealth address untuk private transactions</p>
+                    <p className="text-sm text-neutral-300">Generate stealth address for private transactions</p>
                   </div>
                 )}
 
@@ -186,7 +186,7 @@ export default function Pools() {
 
                 <div className="p-4 bg-semantic-warning/10 rounded-lg border border-semantic-warning/20">
                   <p className="text-sm text-semantic-warning">
-                    <strong>Note:</strong> Simpan private key dengan aman. Address ini hanya bisa diakses oleh Anda.
+                    <strong>Note:</strong> Save private key securely. This address can only be accessed by you.
                   </p>
                 </div>
               </div>

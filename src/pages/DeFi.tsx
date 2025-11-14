@@ -38,15 +38,15 @@ export default function DeFi() {
     { pair: 'MASK-ETH', apy: 45.8, tvl: '$15M', rewards: 'MASK + Trading Fees' },
   ];
 
-  // Simulasi transaksi dengan wallet signature
+  // Transaction simulation with wallet signature
   const handleSupply = async () => {
     if (!account || !signer) {
-      alert('Silakan connect wallet terlebih dahulu');
+      alert('Please connect wallet first');
       return;
     }
 
     if (!supplyAmount || parseFloat(supplyAmount) <= 0) {
-      alert('Masukkan jumlah yang valid');
+      alert('Please enter a valid amount');
       return;
     }
 
@@ -54,8 +54,8 @@ export default function DeFi() {
     setTxStatus('pending');
 
     try {
-      // Dalam production, ini akan berinteraksi dengan smart contract
-      // Untuk demo, kita simulate dengan message signing
+      // In production, this will interact with smart contracts
+      // For demo, we simulate with message signing
       const message = `Supply ${supplyAmount} ETH to Masquerade Privacy Lending Pool\nTimestamp: ${Date.now()}`;
       
       const signature = await signer.signMessage(message);
@@ -68,13 +68,13 @@ export default function DeFi() {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       setTxStatus('success');
-      alert(`Transaksi berhasil! Amount ${supplyAmount} ETH telah di-supply ke privacy pool.\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
+      alert(`Transaction successful! Amount ${supplyAmount} ETH has been supplied to privacy pool.\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
       
       setSupplyAmount('');
     } catch (error: any) {
       console.error('Transaction error:', error);
       setTxStatus('error');
-      alert('Transaksi gagal: ' + (error.message || 'User rejected'));
+      alert('Transaction failed: ' + (error.message || 'User rejected'));
     } finally {
       setIsProcessing(false);
       setTimeout(() => {
@@ -86,12 +86,12 @@ export default function DeFi() {
 
   const handleBorrow = async () => {
     if (!account || !signer) {
-      alert('Silakan connect wallet terlebih dahulu');
+      alert('Please connect wallet first');
       return;
     }
 
     if (!borrowAmount || parseFloat(borrowAmount) <= 0) {
-      alert('Masukkan jumlah yang valid');
+      alert('Please enter a valid amount');
       return;
     }
 
@@ -108,13 +108,13 @@ export default function DeFi() {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       setTxStatus('success');
-      alert(`Transaksi berhasil! Amount ${borrowAmount} ETH telah dipinjam secara anonim.\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
+      alert(`Transaction successful! Amount ${borrowAmount} ETH has been borrowed anonymously.\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
       
       setBorrowAmount('');
     } catch (error: any) {
       console.error('Transaction error:', error);
       setTxStatus('error');
-      alert('Transaksi gagal: ' + (error.message || 'User rejected'));
+      alert('Transaction failed: ' + (error.message || 'User rejected'));
     } finally {
       setIsProcessing(false);
       setTimeout(() => {
@@ -126,7 +126,7 @@ export default function DeFi() {
 
   const handleStake = async (poolName: string, minStake: string) => {
     if (!account || !signer) {
-      alert('Silakan connect wallet terlebih dahulu');
+      alert('Please connect wallet first');
       return;
     }
 
@@ -143,11 +143,11 @@ export default function DeFi() {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       setTxStatus('success');
-      alert(`Staking berhasil di ${poolName}!\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
+      alert(`Staking successful at ${poolName}!\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
     } catch (error: any) {
       console.error('Transaction error:', error);
       setTxStatus('error');
-      alert('Transaksi gagal: ' + (error.message || 'User rejected'));
+      alert('Transaction failed: ' + (error.message || 'User rejected'));
     } finally {
       setIsProcessing(false);
       setTimeout(() => {
@@ -159,7 +159,7 @@ export default function DeFi() {
 
   const handleFarm = async (pair: string) => {
     if (!account || !signer) {
-      alert('Silakan connect wallet terlebih dahulu');
+      alert('Please connect wallet first');
       return;
     }
 
@@ -176,11 +176,11 @@ export default function DeFi() {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       setTxStatus('success');
-      alert(`Farming berhasil dimulai untuk ${pair}!\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
+      alert(`Farming started successfully for ${pair}!\n\nTx Hash: ${mockTxHash.slice(0, 20)}...`);
     } catch (error: any) {
       console.error('Transaction error:', error);
       setTxStatus('error');
-      alert('Transaksi gagal: ' + (error.message || 'User rejected'));
+      alert('Transaction failed: ' + (error.message || 'User rejected'));
     } finally {
       setIsProcessing(false);
       setTimeout(() => {
@@ -203,8 +203,8 @@ export default function DeFi() {
             <h1 className="text-4xl font-bold mb-2">DeFi Protocols</h1>
             <p className="text-neutral-300">
               {account 
-                ? 'Execute transaksi DeFi on-chain dengan privacy preservation' 
-                : 'Connect wallet untuk mengakses DeFi protocols'}
+                ? 'Execute DeFi transactions on-chain with privacy preservation' 
+                : 'Connect wallet to access DeFi protocols'}
             </p>
           </div>
 
@@ -248,7 +248,7 @@ export default function DeFi() {
                 <div>
                   <h3 className="font-semibold text-semantic-warning mb-1">Wallet Not Connected</h3>
                   <p className="text-sm text-neutral-300">
-                    Connect MetaMask wallet untuk execute transaksi DeFi on-chain.
+                    Connect MetaMask wallet to execute DeFi transactions on-chain.
                   </p>
                 </div>
               </div>

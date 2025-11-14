@@ -7,34 +7,34 @@ export default function Landing() {
     {
       icon: Lock,
       title: 'Zero Knowledge Privacy',
-      description: 'Complete anonymity menggunakan ZK-SNARKs dan ZK-STARKs untuk semua transaksi DeFi Anda',
+      description: 'Complete anonymity using ZK-SNARKs and ZK-STARKs for all your DeFi transactions',
     },
     {
       icon: Bot,
       title: 'ERC-8004 AI Agents',
-      description: 'AI agents terverifikasi dengan reputation scoring untuk automated yield farming',
+      description: 'Verified AI agents with reputation scoring for automated yield farming',
     },
     {
       icon: Eye,
       title: 'Privacy Pools',
-      description: 'Transaction mixing dan stealth addresses untuk enhanced anonymity',
+      description: 'Transaction mixing and stealth addresses for enhanced anonymity',
     },
   ];
 
   const useCases = [
     {
       title: 'Privacy Lending',
-      description: 'Pinjam dan beri pinjaman dengan ZK proof of income tanpa mengungkapkan identity',
+      description: 'Lend and borrow with ZK proof of income without revealing identity',
       apy: '8-12%',
     },
     {
       title: 'Automated Farming',
-      description: 'AI agents mengoptimalkan yield farming strategies dengan privacy-preserving execution',
+      description: 'AI agents optimize yield farming strategies with privacy-preserving execution',
       apy: '25-45%',
     },
     {
       title: 'Anonymous Staking',
-      description: 'Stake assets dengan complete anonymity dan automated compounding',
+      description: 'Stake assets with complete anonymity and automated compounding',
       apy: '6-18%',
     },
   ];
@@ -51,23 +51,23 @@ export default function Landing() {
       step: '01',
       icon: Wallet,
       title: 'Connect Wallet',
-      description: 'Hubungkan MetaMask Anda dan mulai transaksi anonim menggunakan Zero Knowledge authentication',
-      action: 'Klik "Connect Wallet" dan ikuti instruksi',
+      description: 'Connect your MetaMask and start anonymous transactions using Zero Knowledge authentication',
+      action: 'Click "Connect Wallet" and follow instructions',
       highlight: 'Private & Secure',
     },
     {
       step: '02',
       icon: Layers,
       title: 'Choose Strategy',
-      description: 'Pilih AI agent dari marketplace atau tentukan strategi DeFi sendiri dengan privacy preservation',
-      action: 'Browse AI agents atau set custom strategy',
+      description: 'Choose AI agents from marketplace or set custom DeFi strategies with privacy preservation',
+      action: 'Browse AI agents or set custom strategy',
       highlight: 'ERC-8004 Compliant',
     },
     {
       step: '03',
       icon: Cpu,
       title: 'AI Execution',
-      description: 'AI agents akan mengeksekusi strategi secara otomatis dengan ZK proofs untuk setiap transaksi',
+      description: 'AI agents will execute strategies automatically with ZK proofs for every transaction',
       action: 'Monitor real-time performance dashboard',
       highlight: 'Automated Yield',
     },
@@ -75,8 +75,8 @@ export default function Landing() {
       step: '04',
       icon: Sparkles,
       title: 'Harvest Profits',
-      description: 'Tarik hasil yield farming dengan complete anonymity menggunakan stealth addresses',
-      action: 'Claim rewards anonim dan reinvest atau withdraw',
+      description: 'Harvest yield farming results with complete anonymity using stealth addresses',
+      action: 'Claim anonymous rewards and reinvest or withdraw',
       highlight: 'Anonymous Withdrawal',
     },
   ];
@@ -104,8 +104,8 @@ export default function Landing() {
             </h1>
             
             <p className="text-xl text-neutral-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Platform DeFi revolusioner yang menggabungkan Zero Knowledge proofs dengan ERC-8004 AI agents 
-              untuk automated yield farming dengan complete anonymity
+              Revolutionary DeFi platform that combines Zero Knowledge proofs with ERC-8004 AI agents 
+              for automated yield farming with complete anonymity
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -146,9 +146,9 @@ export default function Landing() {
       <section className="py-24 px-6 bg-neutral-50/50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Fitur Utama Platform</h2>
+            <h2 className="text-4xl font-bold mb-4">Platform Key Features</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              Teknologi cutting-edge untuk privasi dan otomasi maksimal dalam DeFi
+              Cutting-edge technology for maximum privacy and automation in DeFi
             </p>
           </div>
 
@@ -179,7 +179,7 @@ export default function Landing() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Use Cases</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              Berbagai strategi DeFi dengan privacy preservation
+              Various DeFi strategies with privacy preservation
             </p>
           </div>
 
@@ -212,7 +212,7 @@ export default function Landing() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Technology Stack</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              Dibangun dengan teknologi Web3 terdepan
+              Built with leading Web3 technology
             </p>
           </div>
 
@@ -234,7 +234,7 @@ export default function Landing() {
                   <CheckCircle className="w-5 h-5 text-semantic-success flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium">Privacy-Preserving Authentication</p>
-                    <p className="text-sm text-neutral-300">Stealth addresses dan anonymous user registration</p>
+                    <p className="text-sm text-neutral-300">Stealth addresses and anonymous user registration</p>
                   </div>
                 </div>
               </div>
@@ -250,14 +250,14 @@ export default function Landing() {
                   <CheckCircle className="w-5 h-5 text-semantic-success flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium">Identity & Reputation Registry</p>
-                    <p className="text-sm text-neutral-300">Verified agent capabilities dengan trust scoring</p>
+                    <p className="text-sm text-neutral-300">Verified agent capabilities with trust scoring</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="w-5 h-5 text-semantic-success flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium">Automated Strategy Execution</p>
-                    <p className="text-sm text-neutral-300">AI-powered yield optimization dengan ZK proofs</p>
+                    <p className="text-sm text-neutral-300">AI-powered yield optimization with ZK proofs</p>
                   </div>
                 </div>
               </div>
@@ -270,9 +270,9 @@ export default function Landing() {
       <section className="py-24 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Cara Kerja Platform</h2>
+            <h2 className="text-4xl font-bold mb-4">How the Platform Works</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              Mulai dari wallet connection hingga profit harvesting dalam 4 langkah sederhana
+              From wallet connection to profit harvesting in 4 simple steps
             </p>
           </div>
 
@@ -330,7 +330,7 @@ export default function Landing() {
           >
             <div className="text-center mb-8">
               <h3 className="text-2xl font-semibold mb-2">Visual Process Flow</h3>
-              <p className="text-neutral-300">Lihat bagaimana privacy dan automation bekerja bersama-sama</p>
+              <p className="text-neutral-300">See how privacy and automation work together</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 text-center">
@@ -365,10 +365,10 @@ export default function Landing() {
                 to="/auth"
                 className="inline-flex items-center px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow hover:scale-105"
               >
-                <span>Coba Sekarang - Gratis</span>
+                <span>Try Now - Free</span>
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
-              <p className="text-sm text-neutral-400 mt-2">Tidak perlu investment minimum untuk mulai</p>
+              <p className="text-sm text-neutral-400 mt-2">No minimum investment required to start</p>
             </div>
           </motion.div>
         </div>
@@ -380,15 +380,15 @@ export default function Landing() {
           <div className="bg-gradient-to-r from-primary-500 to-accent-500 rounded-3xl p-12 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-background-page/10"></div>
             <div className="relative z-10">
-              <h2 className="text-4xl font-bold mb-4">Mulai Trading dengan Privacy</h2>
+              <h2 className="text-4xl font-bold mb-4">Start Trading with Privacy</h2>
               <p className="text-lg mb-8 opacity-90">
-                Bergabung dengan ribuan traders yang mengutamakan privacy dan automation
+                Join thousands of traders who prioritize privacy and automation
               </p>
               <Link
                 to="/auth"
                 className="inline-flex items-center px-8 py-4 bg-white text-primary-500 rounded-xl font-semibold hover:scale-105 transition-all duration-fast shadow-lg"
               >
-                <span>Connect Wallet Sekarang</span>
+                <span>Connect Wallet Now</span>
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </div>

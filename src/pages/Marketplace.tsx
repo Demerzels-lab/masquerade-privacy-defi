@@ -84,7 +84,7 @@ export default function Marketplace() {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">AI Agent Marketplace</h1>
-            <p className="text-neutral-300">Browse dan pilih ERC-8004 verified AI agents untuk automated DeFi strategies</p>
+            <p className="text-neutral-300">Browse and select ERC-8004 verified AI agents for automated DeFi strategies</p>
           </div>
 
           {/* Filters */}

@@ -94,7 +94,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-4xl font-bold mb-2">Portfolio Dashboard</h1>
-              <p className="text-neutral-300">Anonymous portfolio tracking dengan privacy preservation</p>
+              <p className="text-neutral-300">Anonymous portfolio tracking with privacy preservation</p>
             </div>
             <div className="flex items-center space-x-2 px-4 py-2 bg-neutral-50 rounded-lg border border-semantic-success/20">
               <Shield className="w-4 h-4 text-semantic-success animate-pulse-glow" />
