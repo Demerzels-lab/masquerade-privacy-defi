@@ -8,13 +8,13 @@ interface CapabilitiesDisplayProps {
 export default function CapabilitiesDisplay({ capabilities, agentType }: CapabilitiesDisplayProps) {
   // Parse capabilities into user-friendly format
   const parseCapabilities = () => {
-    if (!capabilities) return [];
+    if (!capabilities || typeof capabilities !== 'object') return [];
 
     const items: { icon: React.ReactNode; label: string; value: string }[] = [];
 
     // Strategy agents
     if (agentType === 'strategy') {
-      if (capabilities.strategies) {
+      if (capabilities.strategies && Array.isArray(capabilities.strategies)) {
         items.push({
           icon: <TrendingUp className="w-4 h-4" />,
           label: 'Trading Strategies',
@@ -28,7 +28,7 @@ export default function CapabilitiesDisplay({ capabilities, agentType }: Capabil
           value: capabilities.riskTolerance,
         });
       }
-      if (capabilities.targetApy) {
+      if (capabilities.targetApy && capabilities.targetApy.min && capabilities.targetApy.max) {
         items.push({
           icon: <Zap className="w-4 h-4" />,
           label: 'Target APY Range',
@@ -39,18 +39,26 @@ export default function CapabilitiesDisplay({ capabilities, agentType }: Capabil
 
     // Privacy agents
     if (agentType === 'privacy') {
-      if (capabilities.privacyFeatures) {
+      if (capabilities.privacyFeatures && Array.isArray(capabilities.privacyFeatures)) {
         items.push({
           icon: <Shield className="w-4 h-4" />,
           label: 'Privacy Features',
           value: capabilities.privacyFeatures.join(', '),
         });
       }
-      if (capabilities.zkProofTypes) {
+      if (capabilities.zkProofTypes && Array.isArray(capabilities.zkProofTypes)) {
         items.push({
           icon: <CheckCircle2 className="w-4 h-4" />,
           label: 'ZK Proof Types',
           value: capabilities.zkProofTypes.join(', '),
+        });
+      }
+      // Fallback for different field names
+      if (capabilities.features && Array.isArray(capabilities.features)) {
+        items.push({
+          icon: <Shield className="w-4 h-4" />,
+          label: 'Key Features',
+          value: capabilities.features.join(', '),
         });
       }
     }
@@ -93,7 +101,7 @@ export default function CapabilitiesDisplay({ capabilities, agentType }: Capabil
 
     // Liquidity agents
     if (agentType === 'liquidity') {
-      if (capabilities.protocols) {
+      if (capabilities.protocols && Array.isArray(capabilities.protocols)) {
         items.push({
           icon: <Activity className="w-4 h-4" />,
           label: 'Supported Protocols',
@@ -109,6 +117,29 @@ export default function CapabilitiesDisplay({ capabilities, agentType }: Capabil
       }
     }
 
+    // Generic fallback: Display all key-value pairs if no specific parsing matched
+    if (items.length === 0 && capabilities) {
+      Object.entries(capabilities).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          let displayValue = '';
+          
+          if (Array.isArray(value)) {
+            displayValue = value.join(', ');
+          } else if (typeof value === 'object') {
+            displayValue = JSON.stringify(value, null, 2);
+          } else {
+            displayValue = String(value);
+          }
+
+          items.push({
+            icon: <CheckCircle2 className="w-4 h-4" />,
+            label: key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()).trim(),
+            value: displayValue,
+          });
+        }
+      });
+    }
+
     return items;
   };
 
@@ -116,8 +147,20 @@ export default function CapabilitiesDisplay({ capabilities, agentType }: Capabil
 
   if (capabilityItems.length === 0) {
     return (
-      <div className="p-4 bg-neutral-50 rounded-lg text-center text-neutral-300">
-        No capability information available
+      <div className="space-y-3">
+        <div className="p-4 bg-neutral-50 rounded-lg text-center">
+          <p className="text-sm text-neutral-300 mb-2">No detailed capabilities configured</p>
+          {capabilities && (
+            <details className="mt-2">
+              <summary className="text-xs text-primary-500 cursor-pointer hover:underline">
+                View raw data
+              </summary>
+              <pre className="text-xs text-neutral-300 overflow-x-auto mt-2 text-left">
+                {JSON.stringify(capabilities, null, 2)}
+              </pre>
+            </details>
+          )}
+        </div>
       </div>
     );
   }

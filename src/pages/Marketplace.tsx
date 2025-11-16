@@ -61,9 +61,11 @@ export default function Marketplace() {
     }
 
     if (searchQuery) {
+      const query = searchQuery.toLowerCase().trim();
       filtered = filtered.filter(agent =>
-        agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        agent.description.toLowerCase().includes(searchQuery.toLowerCase())
+        agent.name.toLowerCase().includes(query) ||
+        agent.description.toLowerCase().includes(query) ||
+        agent.agent_type.toLowerCase().replace('_', ' ').includes(query)
       );
     }
 
