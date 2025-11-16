@@ -68,7 +68,12 @@ export default function Pools() {
                 key={index}
                 className="bg-neutral-50 rounded-xl p-4 border border-neutral-400/20"
               >
-                <p className="text-sm text-neutral-300 mb-1">{stat.label}</p>
+                <p className="text-sm text-neutral-300 mb-1">
+                  {stat.label === 'Total Pool Size' ? 'Total Pool Size' : 
+                   stat.label === 'Active Mixers' ? 'Active Mixers' :
+                   stat.label === 'Anonymity Set' ? 'Anonymity Set' : 
+                   'Privacy Score'}
+                </p>
                 <p className="text-2xl font-bold text-primary-500">{stat.value}</p>
               </div>
             ))}
