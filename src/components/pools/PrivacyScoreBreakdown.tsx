@@ -13,28 +13,28 @@ export default function PrivacyScoreBreakdown({ metrics }: PrivacyScoreBreakdown
       value: metrics.breakdown.poolLiquidity,
       weight: '30%',
       icon: TrendingUp,
-      description: 'Ukuran pool yang lebih besar meningkatkan anonimitas',
+      description: 'Larger pool size increases anonymity',
     },
     {
       label: 'Mixer Activity',
       value: metrics.breakdown.mixerActivity,
       weight: '25%',
       icon: Users,
-      description: 'Aktivitas mixer yang tinggi menyulitkan pelacakan',
+      description: 'High mixer activity makes tracking difficult',
     },
     {
       label: 'Anonymity Set Size',
       value: metrics.breakdown.anonymitySetSize,
       weight: '30%',
       icon: Shield,
-      description: 'Semakin besar set, semakin sulit identifikasi',
+      description: 'Larger set size makes identification harder',
     },
     {
       label: 'Time Randomization',
       value: metrics.breakdown.timeRandomization,
       weight: '15%',
       icon: Clock,
-      description: 'Pengacakan waktu memutus pola temporal',
+      description: 'Time randomization breaks temporal patterns',
     },
   ];
 
@@ -43,7 +43,7 @@ export default function PrivacyScoreBreakdown({ metrics }: PrivacyScoreBreakdown
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-bold flex items-center">
           <Info className="w-5 h-5 mr-2 text-primary-500" />
-          Metodologi Privacy Score
+          Privacy Score Methodology
         </h3>
         <div className="flex items-center space-x-2">
           <span className="text-sm text-neutral-300">Total Score:</span>
@@ -54,8 +54,8 @@ export default function PrivacyScoreBreakdown({ metrics }: PrivacyScoreBreakdown
       </div>
 
       <p className="text-sm text-neutral-300 mb-6">
-        Privacy Score dihitung berdasarkan 4 faktor dengan bobot yang berbeda untuk memberikan 
-        gambaran transparan tentang tingkat anonimitas Anda.
+        Privacy Score is calculated based on 4 factors with different weights to provide 
+        a transparent view of your anonymity level.
       </p>
 
       <div className="space-y-4">
@@ -76,7 +76,7 @@ export default function PrivacyScoreBreakdown({ metrics }: PrivacyScoreBreakdown
                   <div className="flex items-center space-x-2">
                     <span className="font-semibold">{item.label}</span>
                     <span className="text-xs text-neutral-300 bg-neutral-50 px-2 py-0.5 rounded">
-                      Bobot: {item.weight}
+                      Weight: {item.weight}
                     </span>
                   </div>
                   <p className="text-xs text-neutral-300 mt-1">{item.description}</p>
@@ -110,8 +110,8 @@ export default function PrivacyScoreBreakdown({ metrics }: PrivacyScoreBreakdown
 
       <div className="mt-6 p-4 bg-primary-500/5 border border-primary-500/20 rounded-lg">
         <p className="text-xs text-neutral-300">
-          <strong className="text-primary-500">Catatan:</strong> Score ini dihitung secara real-time 
-          berdasarkan kondisi pool saat ini. Skor yang lebih tinggi menunjukkan tingkat privasi yang lebih baik.
+          <strong className="text-primary-500">Note:</strong> This score is calculated in real-time 
+          based on current pool conditions. Higher scores indicate better privacy levels.
         </p>
       </div>
     </div>

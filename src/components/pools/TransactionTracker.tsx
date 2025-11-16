@@ -56,7 +56,7 @@ export default function TransactionTracker({ transactions, onClearAll }: Transac
   };
 
   const typeLabels = {
-    deposit: 'Deposit ke Pool',
+    deposit: 'Pool Deposit',
     withdrawal: 'Withdrawal',
     stealth_gen: 'Generate Stealth Address',
   };
@@ -64,13 +64,13 @@ export default function TransactionTracker({ transactions, onClearAll }: Transac
   return (
     <div className="bg-neutral-50 rounded-2xl p-6 border border-neutral-400/20">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-bold">Riwayat Transaksi</h3>
+        <h3 className="text-lg font-bold">Transaction History</h3>
         {transactions.length > 0 && (
           <button
             onClick={onClearAll}
             className="text-xs text-neutral-300 hover:text-semantic-error transition-colors"
           >
-            Hapus Semua
+            Clear All
           </button>
         )}
       </div>
@@ -87,7 +87,7 @@ export default function TransactionTracker({ transactions, onClearAll }: Transac
                 : 'bg-neutral-100 text-neutral-300 hover:bg-neutral-50'
             }`}
           >
-            {status === 'all' ? 'Semua' : statusConfig[status].label}
+            {status === 'all' ? 'All' : statusConfig[status].label}
             {status !== 'all' && (
               <span className="ml-1">({transactions.filter(tx => tx.status === status).length})</span>
             )}
@@ -102,7 +102,7 @@ export default function TransactionTracker({ transactions, onClearAll }: Transac
             <div className="text-center py-8">
               <Clock className="w-12 h-12 text-neutral-300 mx-auto mb-3 opacity-50" />
               <p className="text-neutral-300">
-                {filter === 'all' ? 'Belum ada transaksi' : `Tidak ada transaksi ${statusConfig[filter].label.toLowerCase()}`}
+                {filter === 'all' ? 'No transactions yet' : `No ${statusConfig[filter].label.toLowerCase()} transactions`}
               </p>
             </div>
           ) : (
@@ -135,7 +135,7 @@ export default function TransactionTracker({ transactions, onClearAll }: Transac
                         
                         {tx.amount && (
                           <p className="text-sm text-neutral-300">
-                            Jumlah: <span className="font-semibold text-text-primary">{tx.amount} ETH</span>
+                            Amount: <span className="font-semibold text-text-primary">{tx.amount} ETH</span>
                             {tx.privacyLevel && (
                               <span className="ml-2 text-xs">
                                 • Level: <span className="capitalize">{tx.privacyLevel}</span>
@@ -167,7 +167,7 @@ export default function TransactionTracker({ transactions, onClearAll }: Transac
                             rel="noopener noreferrer"
                             className="text-xs text-primary-500 hover:text-primary-700 flex items-center mt-2 space-x-1"
                           >
-                            <span>Lihat di Etherscan</span>
+                            <span>View on Etherscan</span>
                             <ExternalLink className="w-3 h-3" />
                           </a>
                         )}
@@ -184,7 +184,7 @@ export default function TransactionTracker({ transactions, onClearAll }: Transac
       {filteredTransactions.length > 0 && (
         <div className="mt-4 pt-4 border-t border-neutral-400/20">
           <div className="flex items-center justify-between text-xs text-neutral-300">
-            <span>Total: {filteredTransactions.length} transaksi</span>
+            <span>Total: {filteredTransactions.length} transactions</span>
             <span>
               Success: {transactions.filter(tx => tx.status === 'success').length} • 
               Processing: {transactions.filter(tx => tx.status === 'processing').length} • 

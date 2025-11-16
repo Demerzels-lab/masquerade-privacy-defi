@@ -86,7 +86,7 @@ export default function Pools() {
 
   const handleDeposit = () => {
     if (!depositAmount || parseFloat(depositAmount) <= 0) {
-      alert('Masukkan jumlah deposit yang valid');
+      alert('Please enter a valid deposit amount');
       return;
     }
 
@@ -137,22 +137,22 @@ export default function Pools() {
     { 
       label: 'Total Pool Size', 
       value: '$52M',
-      tooltip: 'Total dana yang tersedia dalam privacy pool'
+      tooltip: 'Total funds available in privacy pool'
     },
     { 
       label: 'Active Mixers', 
       value: '2,345',
-      tooltip: 'Jumlah pengguna aktif yang melakukan mixing saat ini'
+      tooltip: 'Active users currently mixing'
     },
     { 
       label: 'Anonymity Set', 
       value: '10,000+',
-      tooltip: 'Total pengguna dalam anonymity set - semakin besar semakin anonim'
+      tooltip: 'Total users in anonymity set - larger means more anonymous'
     },
     { 
       label: 'Privacy Score', 
       value: `${privacyMetrics.totalScore}%`,
-      tooltip: 'Skor privasi berdasarkan metodologi transparan'
+      tooltip: 'Privacy score based on transparent methodology'
     },
   ];
 
@@ -176,7 +176,7 @@ export default function Pools() {
             >
               <Shield className="w-4 h-4" />
               <span className="text-sm font-medium">
-                {showSecurityInfo ? 'Sembunyikan' : 'Lihat'} Security Audit & Bug Bounty
+                {showSecurityInfo ? 'Hide' : 'View'} Security Audit & Bug Bounty
               </span>
             </button>
           </div>
