@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import AgentCard from '../components/marketplace/AgentCard';
 import CapabilitiesDisplay from '../components/marketplace/CapabilitiesDisplay';
+import AgentActivationModal from '../components/marketplace/AgentActivationModal';
 
 interface Agent {
   id: string;
@@ -31,6 +32,8 @@ export default function Marketplace() {
   const [selectedType, setSelectedType] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const [activatingAgent, setActivatingAgent] = useState<Agent | null>(null);
+  const [showActivationModal, setShowActivationModal] = useState(false);
 
   useEffect(() => {
     loadAgents();
@@ -77,8 +80,25 @@ export default function Marketplace() {
   };
 
   const handleSelectAgent = (agent: Agent) => {
-    // TODO: Implement agent activation logic
-    alert(`Agent "${agent.name}" selected for activation. Implementation pending.`);
+    setActivatingAgent(agent);
+    setShowActivationModal(true);
+  };
+
+  const handleActivateAgent = async (agentId: string) => {
+    // Simulate agent activation process
+    // In production, this would call an edge function or API
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // TODO: Replace with actual activation logic:
+    // 1. Call edge function to activate agent
+    // 2. Store activation in user_agents table
+    // 3. Initialize agent configuration
+    // 4. Start monitoring agent performance
+    
+    console.log('Agent activated:', agentId);
+    
+    // Reload agents to reflect activation status
+    await loadAgents();
   };
 
   const agentTypes = [
@@ -263,6 +283,17 @@ export default function Marketplace() {
           </motion.div>
         </div>
       )}
+
+      {/* Agent Activation Modal */}
+      <AgentActivationModal
+        agent={activatingAgent}
+        isOpen={showActivationModal}
+        onClose={() => {
+          setShowActivationModal(false);
+          setActivatingAgent(null);
+        }}
+        onActivate={handleActivateAgent}
+      />
     </div>
   );
 }
