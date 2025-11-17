@@ -40,7 +40,6 @@ export default function Navigation() {
                 <img src="/logo.jpeg" alt="Masquerade Logo" className="w-8 h-8 rounded" />
               </div>
             </div>
-            <span className="text-xl font-bold text-gradient terminal-text">MASQUERADE</span>
           </Link>
 
           {/* Desktop Navigation */}
