@@ -1,409 +1,380 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, Lock, Zap, Bot, Eye, TrendingUp, ArrowRight, CheckCircle, Wallet, Layers, Cpu, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 
 export default function Landing() {
-  const features = [
+  const [stats, setStats] = useState({
+    agents: 0,
+    users: 0,
+    apy: 0,
+    tvl: 0
+  });
+
+  const fetchPlatformStats = async () => {
+    try {
+      const { count: agentsCount } = await supabase
+        .from('ai_agents')
+        .select('*', { count: 'exact', head: true })
+        .eq('active', true);
+
+      const { count: usersCount } = await supabase
+        .from('users')
+        .select('*', { count: 'exact', head: true });
+
+      const { data: apyData } = await supabase
+        .from('ai_agents')
+        .select('avg_yield')
+        .eq('active', true);
+
+      const avgApy = apyData && apyData.length > 0 
+        ? (apyData.reduce((sum, agent) => sum + agent.avg_yield, 0) / apyData.length).toFixed(1)
+        : '26.8';
+
+      setStats({
+        agents: agentsCount || 6,
+        users: usersCount || 1,
+        apy: parseFloat(avgApy),
+        tvl: 125 // Static fallback as per requirements
+      });
+    } catch (error) {
+      console.error('Error fetching platform stats:', error);
+      setStats({ agents: 6, users: 1, apy: 26.8, tvl: 125 });
+    }
+  };
+
+  useEffect(() => {
+    fetchPlatformStats();
+  }, []);
+
+  const visionFeatures = [
     {
       icon: Lock,
-      title: 'Zero Knowledge Privacy',
-      description: 'Complete anonymity using ZK-SNARKs and ZK-STARKs for all your DeFi transactions',
+      title: 'Privacy-First DeFi',
+      description: 'Complete transaction anonymity with zero-knowledge proofs'
     },
     {
       icon: Bot,
-      title: 'ERC-8004 AI Agents',
-      description: 'Verified AI agents with reputation scoring for automated yield farming',
+      title: 'AI-Powered Agents',
+      description: 'ERC-8004 compliant agents for automated yield optimization'
     },
     {
-      icon: Eye,
-      title: 'Privacy Pools',
-      description: 'Transaction mixing and stealth addresses for enhanced anonymity',
-    },
+      icon: Shield,
+      title: 'zkMechanism',
+      description: 'Advanced cryptography for secure privacy preservation'
+    }
   ];
 
-  const useCases = [
+  const coreFeatures = [
+    {
+      icon: Zap,
+      title: 'Instant Privacy',
+      description: 'Deploy privacy-preserving transactions in seconds'
+    },
+    {
+      icon: Layers,
+      title: 'Smart Routing',
+      description: 'AI agents optimize across multiple protocols'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Yield Maximization',
+      description: 'Automated strategies for maximum returns'
+    }
+  ];
+
+  const capabilities = [
     {
       title: 'Privacy Lending',
-      description: 'Lend and borrow with ZK proof of income without revealing identity',
-      apy: '8-12%',
+      description: 'Lend and borrow with ZK proof of income without revealing identity or transaction history'
     },
     {
-      title: 'Automated Farming',
-      description: 'AI agents optimize yield farming strategies with privacy-preserving execution',
-      apy: '25-45%',
+      title: 'Anonymous Staking',  
+      description: 'Stake assets with complete anonymity, automated compounding, and privacy-preserving rewards'
     },
     {
-      title: 'Anonymous Staking',
-      description: 'Stake assets with complete anonymity and automated compounding',
-      apy: '6-18%',
+      title: 'Stealth Yield Farming',
+      description: 'AI agents optimize yield farming strategies with full transaction privacy protection'
     },
+    {
+      title: 'Cross-Chain Privacy',
+      description: 'Seamlessly operate across multiple chains while maintaining complete privacy'
+    }
   ];
 
-  const stats = [
-    { label: 'Total Value Locked', value: '$125M' },
-    { label: 'Active Users', value: '12.5K' },
-    { label: 'Average APY', value: '38.2%' },
-    { label: 'AI Agents', value: '150+' },
-  ];
-
-  const howItWorksSteps = [
+  const roadmap = [
     {
-      step: '01',
-      icon: Wallet,
-      title: 'Connect Wallet',
-      description: 'Connect your MetaMask and start anonymous transactions using Zero Knowledge authentication',
-      action: 'Click "Connect Wallet" and follow instructions',
-      highlight: 'Private & Secure',
+      quarter: 'Q1',
+      year: '2025',
+      title: 'Foundation & Core Privacy',
+      milestones: [
+        'ZK-ERC8004 Token Standard Launch',
+        'Privacy Pool Beta Testing',
+        'AI Agent Marketplace MVP',
+        'Mobile Privacy Wallet'
+      ]
     },
     {
-      step: '02',
-      icon: Layers,
-      title: 'Choose Strategy',
-      description: 'Choose AI agents from marketplace or set custom DeFi strategies with privacy preservation',
-      action: 'Browse AI agents or set custom strategy',
-      highlight: 'ERC-8004 Compliant',
+      quarter: 'Q2', 
+      year: '2025',
+      title: 'Advanced AI Integration',
+      milestones: [
+        'Multi-Chain AI Agent Orchestration',
+        'Advanced Yield Optimization Algorithms',
+        'Privacy Cross-Chain Bridges',
+        'DeFi Protocol Integrations'
+      ]
     },
     {
-      step: '03',
-      icon: Cpu,
-      title: 'AI Execution',
-      description: 'AI agents will execute strategies automatically with ZK proofs for every transaction',
-      action: 'Monitor real-time performance dashboard',
-      highlight: 'Automated Yield',
+      quarter: 'Q3',
+      year: '2025', 
+      title: 'Ecosystem Expansion',
+      milestones: [
+        'DAO Governance Implementation',
+        'Privacy NFT Marketplace',
+        'Advanced Analytics Dashboard',
+        'Institutional Privacy Solutions'
+      ]
     },
     {
-      step: '04',
-      icon: Sparkles,
-      title: 'Harvest Profits',
-      description: 'Harvest yield farming results with complete anonymity using stealth addresses',
-      action: 'Claim anonymous rewards and reinvest or withdraw',
-      highlight: 'Anonymous Withdrawal',
-    },
+      quarter: 'Q4',
+      year: '2025',
+      title: 'Global Scale & Compliance',
+      milestones: [
+        'Regulatory Framework Compliance',
+        'Enterprise Privacy Solutions',
+        'Global Privacy Regulations Support',
+        'Web3 Privacy Infrastructure'
+      ]
+    }
   ];
 
   return (
-    <div className="min-h-screen text-text-primary">
-      {/* Hero Section - Terminal Style */}
-      <section className="relative pt-32 pb-24 px-8">
-        {/* Coordinate Label */}
-        <div className="coordinate-label absolute top-24 left-8">X:0 Y:0</div>
-        
-        <div className="container mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-neutral-50/80 backdrop-blur-sm rounded-sm mb-6 terminal-border">
-              <Shield className="w-4 h-4 text-accent-500" />
-              <span className="text-sm text-neutral-300 uppercase tracking-wider">Privacy-Preserving DeFi with AI Agents</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-7xl font-bold mb-6 leading-tight max-w-4xl mx-auto terminal-text">
-              <span className="text-gradient uppercase tracking-tight">MASQUERADE</span>
-              <br />
-              <span className="text-text-primary uppercase">PRIVACY DEFI</span>
-            </h1>
-            
-            <p className="text-xl text-neutral-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Revolutionary DeFi platform that combines Zero Knowledge proofs with ERC-8004 AI agents 
-              for automated yield farming with complete anonymity
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/auth"
-                className="px-8 py-4 bg-accent-500/20 border border-accent-500/50 text-accent-500 rounded-sm font-semibold hover:bg-accent-500/30 hover:border-accent-500 transition-all duration-fast shadow-glow hover:shadow-glow-strong flex items-center space-x-2 uppercase tracking-wider"
-              >
-                <span>START ANONYMOUS TRADING</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                to="/marketplace"
-                className="px-8 py-4 bg-transparent border border-neutral-400/30 text-neutral-300 rounded-sm font-semibold hover:terminal-border-hover hover:text-text-primary transition-all duration-fast uppercase tracking-wider"
-              >
-                EXPLORE AI AGENTS
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Stats - Terminal Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
-          >
-            {stats.map((stat, index) => (
-              <div key={index} className="relative bg-neutral-50/80 backdrop-blur-sm rounded-sm p-6 terminal-border hover:terminal-border-hover transition-all duration-normal group">
-                {/* Coordinate Label untuk setiap card */}
-                <div className="coordinate-label absolute top-2 left-2">X:{index} Y:1</div>
-                <div className="text-3xl font-bold text-accent-500 mb-2 terminal-text mt-3">{stat.value}</div>
-                <div className="text-sm text-neutral-300 uppercase tracking-wide">{stat.label}</div>
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      {/* Scroll Snap Container */}
+      <div className="scroll-snap-container">
+        {/* Section 1: THE VISION */}
+        <section className="min-h-screen flex items-center justify-center px-8 py-24 scroll-snap-start">
+          {/* Coordinate Label */}
+          <div className="coordinate-label absolute top-24 left-8 text-white/50 text-sm">X:0 Y:0</div>
+          
+          <div className="container mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+              {/* Left Column - THE VISION */}
+              <div className="lg:col-span-1">
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="content-overlay max-w-md"
+                >
+                  <h1 className="section-title text-4xl lg:text-5xl font-bold mb-4">
+                    THE VISION
+                  </h1>
+                  <p className="text-lg text-white/80 mb-8">
+                    Privacy-first DeFi powered by AI agents
+                  </p>
+                  <div className="coordinate-label text-white/30 text-xs">X:1 Y:1</div>
+                </motion.div>
               </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Features Section - Terminal Style */}
-      <section className="py-24 px-8 bg-neutral-50/30 border-y terminal-border">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 terminal-text uppercase tracking-wide">PLATFORM KEY FEATURES</h2>
-            <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              Cutting-edge technology for maximum privacy and automation in DeFi
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="relative bg-background-surface/80 backdrop-blur-sm rounded-md p-8 terminal-border hover:terminal-border-hover transition-all duration-normal hover:shadow-card-hover group"
-              >
-                {/* Coordinate Label */}
-                <div className="coordinate-label absolute top-2 left-2">X:{index} Y:2</div>
-                
-                <div className="w-12 h-12 bg-accent-500/10 rounded-md flex items-center justify-center mb-6 terminal-border group-hover:shadow-glow transition-all duration-normal mt-4">
-                  <feature.icon className="w-6 h-6 text-accent-500" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3 terminal-text uppercase tracking-wide">{feature.title}</h3>
-                <p className="text-neutral-300 leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases Section */}
-      <section className="py-24 px-8">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Use Cases</h2>
-            <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              Various DeFi strategies with privacy preservation
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {useCases.map((useCase, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="relative bg-neutral-50/80 backdrop-blur-sm rounded-sm p-8 terminal-border hover:shadow-card-hover transition-all duration-normal"
-              >
-                <div className="coordinate-label absolute top-2 left-2">X:{index} Y:3</div>
-                <div className="flex items-center justify-between mb-4 mt-3">
-                  <h3 className="text-xl font-semibold terminal-text uppercase tracking-wide">{useCase.title}</h3>
-                  <div className="px-3 py-1 bg-semantic-success/20 border border-semantic-success/30 text-semantic-success rounded-sm text-sm font-semibold">
-                    {useCase.apy} APY
-                  </div>
-                </div>
-                <p className="text-neutral-300 leading-relaxed">{useCase.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technology Stack */}
-      <section className="py-24 px-8 bg-neutral-50/50">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Technology Stack</h2>
-            <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              Built with leading Web3 technology
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-background-surface rounded-2xl p-8 border border-neutral-400/20">
-              <h3 className="text-2xl font-semibold mb-6 flex items-center">
-                <Zap className="w-6 h-6 text-primary-500 mr-3" />
-                Zero Knowledge Proofs
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-semantic-success flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium">ZK-SNARKs & ZK-STARKs</p>
-                    <p className="text-sm text-neutral-300">Completeness, Soundness, Zero-knowledge properties</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-semantic-success flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Privacy-Preserving Authentication</p>
-                    <p className="text-sm text-neutral-300">Stealth addresses and anonymous user registration</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-background-surface rounded-2xl p-8 border border-neutral-400/20">
-              <h3 className="text-2xl font-semibold mb-6 flex items-center">
-                <TrendingUp className="w-6 h-6 text-accent-500 mr-3" />
-                ERC-8004 AI Agents
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-semantic-success flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Identity & Reputation Registry</p>
-                    <p className="text-sm text-neutral-300">Verified agent capabilities with trust scoring</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-semantic-success flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Automated Strategy Execution</p>
-                    <p className="text-sm text-neutral-300">AI-powered yield optimization with ZK proofs</p>
-                  </div>
+              {/* Right Column - Overlapping Feature Cards */}
+              <div className="lg:col-span-2 relative">
+                <div className="relative h-[500px]">
+                  {visionFeatures.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.2 }}
+                      className={`overlay-block absolute ${
+                        index === 0 ? 'top-0 left-0' :
+                        index === 1 ? 'top-20 left-20 z-10' :
+                        'top-40 left-40 z-20'
+                      }`}
+                    >
+                      <div className="coordinate-label text-white/30 text-xs">
+                        X:{index + 2} Y:1
+                      </div>
+                      <div className="flex items-center space-x-3 mb-3">
+                        <feature.icon className="w-6 h-6 text-purple-400" />
+                        <h3 className="text-xl font-semibold">{feature.title}</h3>
+                      </div>
+                      <p className="text-white/70">{feature.description}</p>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* How It Works Section */}
-      <section className="py-24 px-8">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">How the Platform Works</h2>
-            <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
-              From wallet connection to profit harvesting in 4 simple steps
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {howItWorksSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="relative group"
-              >
-                {/* Connection Line (except last item) */}
-                {index < howItWorksSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 z-0 group-hover:shadow-glow transition-all duration-normal"></div>
-                )}
-                
-                <div className="bg-background-surface rounded-2xl p-6 border border-neutral-400/20 hover:border-primary-500/40 transition-all duration-normal hover:shadow-card-hover relative z-10">
-                  {/* Step Number */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-3xl font-bold text-primary-500/20">
-                      {step.step}
-                    </div>
-                    <div className="px-3 py-1 bg-primary-500/10 text-primary-500 rounded-full text-xs font-semibold">
-                      {step.highlight}
-                    </div>
-                  </div>
-
-                  {/* Icon */}
-                  <div className="w-12 h-12 bg-primary-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:shadow-glow transition-all duration-normal">
-                    <step.icon className="w-6 h-6 text-primary-500" />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                  <p className="text-neutral-300 leading-relaxed mb-4">{step.description}</p>
-                  
-                  {/* Action */}
-                  <div className="bg-neutral-50 rounded-lg p-3 border border-neutral-400/10">
-                    <p className="text-sm text-primary-500 font-medium">💡 {step.action}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Process Flow Visualization */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="mt-16 bg-gradient-to-r from-background-surface to-neutral-50/30 rounded-2xl p-8 border border-primary-500/20"
-          >
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold mb-2">Visual Process Flow</h3>
-              <p className="text-neutral-300">See how privacy and automation work together</p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div className="space-y-2">
-                <div className="w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto">
-                  <Lock className="w-8 h-8 text-primary-500" />
-                </div>
-                <h4 className="font-semibold">Privacy Layer</h4>
-                <p className="text-sm text-neutral-300">ZK proofs, stealth addresses, mixing pools</p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="w-16 h-16 bg-accent-500/10 rounded-full flex items-center justify-center mx-auto">
-                  <Bot className="w-8 h-8 text-accent-500" />
-                </div>
-                <h4 className="font-semibold">AI Execution</h4>
-                <p className="text-sm text-neutral-300">ERC-8004 agents, yield optimization, risk management</p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="w-16 h-16 bg-semantic-success/10 rounded-full flex items-center justify-center mx-auto">
-                  <TrendingUp className="w-8 h-8 text-semantic-success" />
-                </div>
-                <h4 className="font-semibold">DeFi Integration</h4>
-                <p className="text-sm text-neutral-300">Lending, staking, farming protocols</p>
-              </div>
-            </div>
-
-            {/* Interactive CTA */}
-            <div className="mt-8 text-center">
-              <Link
-                to="/auth"
-                className="inline-flex items-center px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow hover:scale-105"
-              >
-                <span>Try Now - Free</span>
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-              <p className="text-sm text-neutral-400 mt-2">No minimum investment required to start</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-8">
-        <div className="container mx-auto max-w-4xl">
-          <div className="bg-gradient-to-r from-primary-500 to-accent-500 rounded-3xl p-12 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-background-page/10"></div>
-            <div className="relative z-10">
-              <h2 className="text-4xl font-bold mb-4">Start Trading with Privacy</h2>
-              <p className="text-lg mb-8 opacity-90">
-                Join thousands of traders who prioritize privacy and automation
+        {/* Section 2: THE CORE */}
+        <section className="min-h-screen flex items-center justify-center px-8 py-24 scroll-snap-start">
+          {/* Coordinate Label */}
+          <div className="coordinate-label absolute top-24 left-8 text-white/50 text-sm">X:0 Y:1</div>
+          
+          <div className="container mx-auto max-w-6xl">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="coordinate-label text-white/30 text-xs">X:1 Y:2</div>
+              <h2 className="section-title text-4xl lg:text-5xl font-bold mb-4">
+                THE CORE
+              </h2>
+              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                Core infrastructure powering privacy-preserving DeFi with AI intelligence
               </p>
-              <Link
-                to="/auth"
-                className="inline-flex items-center px-8 py-4 bg-white text-primary-500 rounded-xl font-semibold hover:scale-105 transition-all duration-fast shadow-lg"
-              >
-                <span>Connect Wallet Now</span>
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              {coreFeatures.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  className="overlay-block p-6"
+                >
+                  <div className="coordinate-label text-white/30 text-xs">X:{index + 2} Y:2</div>
+                  <div className="flex items-center space-x-3 mb-4">
+                    <feature.icon className="w-8 h-8 text-purple-400" />
+                    <h3 className="text-xl font-semibold">{feature.title}</h3>
+                  </div>
+                  <p className="text-white/70">{feature.description}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Dynamic Stats Overlay */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="stats-overlay max-w-4xl mx-auto"
+            >
+              <div className="coordinate-label text-white/30 text-xs">X:1 Y:3</div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-400">{stats.agents}+</div>
+                  <div className="text-white/70 text-sm">AI Agents</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-400">{stats.users}</div>
+                  <div className="text-white/70 text-sm">Active Users</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-400">{stats.apy}%</div>
+                  <div className="text-white/70 text-sm">Avg APY</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-400">${stats.tvl}M</div>
+                  <div className="text-white/70 text-sm">TVL</div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Section 3: CAPABILITIES */}
+        <section className="min-h-screen flex items-center justify-center px-8 py-24 scroll-snap-start">
+          {/* Coordinate Label */}
+          <div className="coordinate-label absolute top-24 left-8 text-white/50 text-sm">X:0 Y:2</div>
+          
+          <div className="container mx-auto max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="coordinate-label text-white/30 text-xs">X:1 Y:4</div>
+              <h2 className="section-title text-4xl lg:text-5xl font-bold mb-4">
+                CAPABILITIES
+              </h2>
+              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                Advanced privacy solutions for the future of decentralized finance
+              </p>
+            </motion.div>
+
+            <div className="space-y-8">
+              {capabilities.map((capability, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  className="overlay-block p-8"
+                >
+                  <div className="coordinate-label text-white/30 text-xs">X:2 Y:{index + 4}</div>
+                  <div className="flex items-start space-x-4">
+                    <div className="capability-number">0{index + 1}</div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold mb-3">{capability.title}</h3>
+                      <p className="text-white/70 leading-relaxed">{capability.description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Section 4: ROADMAP & FUTURE */}
+        <section className="min-h-screen flex items-center justify-center px-8 py-24 scroll-snap-start">
+          {/* Coordinate Label */}
+          <div className="coordinate-label absolute top-24 left-8 text-white/50 text-sm">X:0 Y:3</div>
+          
+          <div className="container mx-auto max-w-6xl">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="coordinate-label text-white/30 text-xs">X:1 Y:8</div>
+              <h2 className="section-title text-4xl lg:text-5xl font-bold mb-4">
+                ROADMAP & FUTURE
+              </h2>
+              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                Strategic development timeline for privacy-preserving DeFi ecosystem
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {roadmap.map((phase, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  className="overlay-block p-6"
+                >
+                  <div className="coordinate-label text-white/30 text-xs">X:{index + 2} Y:8</div>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-semibold text-purple-400 mb-1">
+                      {phase.quarter} {phase.year}
+                    </h3>
+                    <h4 className="text-xl font-bold mb-4">{phase.title}</h4>
+                  </div>
+                  <ul className="space-y-2">
+                    {phase.milestones.map((milestone, idx) => (
+                      <li key={idx} className="flex items-center space-x-2 text-white/70">
+                        <Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                        <span className="text-sm">{milestone}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
