@@ -103,50 +103,38 @@ export default function Landing() {
     }
   ];
 
-  const roadmap = [
+  const howItWorks = [
     {
-      quarter: 'Q1',
-      year: '2025',
-      title: 'Foundation & Core Privacy',
-      milestones: [
-        'ZK-ERC8004 Token Standard Launch',
-        'Privacy Pool Beta Testing',
-        'AI Agent Marketplace MVP',
-        'Mobile Privacy Wallet'
-      ]
+      number: '01',
+      highlight: 'Private & Secure',
+      title: 'Connect Wallet',
+      description: 'Connect your MetaMask and start anonymous transactions using Zero Knowledge authentication',
+      action: 'Click "Connect Wallet" and follow instructions',
+      icon: Wallet
     },
     {
-      quarter: 'Q2', 
-      year: '2025',
-      title: 'Advanced AI Integration',
-      milestones: [
-        'Multi-Chain AI Agent Orchestration',
-        'Advanced Yield Optimization Algorithms',
-        'Privacy Cross-Chain Bridges',
-        'DeFi Protocol Integrations'
-      ]
+      number: '02',
+      highlight: 'ERC-8004 Compliant',
+      title: 'Choose Strategy',
+      description: 'Choose AI agents from marketplace or set custom DeFi strategies with privacy preservation',
+      action: 'Browse AI agents or set custom strategy',
+      icon: Layers
     },
     {
-      quarter: 'Q3',
-      year: '2025', 
-      title: 'Ecosystem Expansion',
-      milestones: [
-        'DAO Governance Implementation',
-        'Privacy NFT Marketplace',
-        'Advanced Analytics Dashboard',
-        'Institutional Privacy Solutions'
-      ]
+      number: '03',
+      highlight: 'Automated Yield',
+      title: 'AI Execution',
+      description: 'AI agents will execute strategies automatically with ZK proofs for every transaction',
+      action: 'Monitor real-time performance dashboard',
+      icon: Zap
     },
     {
-      quarter: 'Q4',
-      year: '2025',
-      title: 'Global Scale & Compliance',
-      milestones: [
-        'Regulatory Framework Compliance',
-        'Enterprise Privacy Solutions',
-        'Global Privacy Regulations Support',
-        'Web3 Privacy Infrastructure'
-      ]
+      number: '04',
+      highlight: 'Anonymous Withdrawal',
+      title: 'Harvest Profits',
+      description: 'Harvest yield farming results with complete anonymity using stealth addresses',
+      action: 'Claim anonymous rewards and reinvest or withdraw',
+      icon: TrendingUp
     }
   ];
 
@@ -347,12 +335,12 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* Section 4: ROADMAP & FUTURE */}
+        {/* Section 4: HOW IT WORKS */}
         <section className="min-h-screen flex items-center justify-center px-8 py-24 scroll-snap-start">
           {/* Coordinate Label */}
           <div className="coordinate-label absolute top-24 left-8 text-white/50 text-sm">X:0 Y:3</div>
           
-          <div className="container mx-auto max-w-6xl">
+          <div className="container mx-auto max-w-7xl">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -361,37 +349,53 @@ export default function Landing() {
             >
               <div className="coordinate-label text-white/30 text-xs">X:1 Y:8</div>
               <h2 className="section-title text-4xl lg:text-5xl font-bold mb-4">
-                ROADMAP & FUTURE
+                HOW IT WORKS
               </h2>
               <p className="text-xl text-white/80 max-w-3xl mx-auto">
-                Strategic development timeline for privacy-preserving DeFi ecosystem
+                From wallet connection to profit harvesting in 4 simple steps
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {roadmap.map((phase, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {howItWorks.map((step, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="overlay-block p-6"
+                  className="overlay-block p-6 relative"
                 >
                   <div className="coordinate-label text-white/30 text-xs">X:{index + 2} Y:8</div>
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-purple-400 mb-1">
-                      {phase.quarter} {phase.year}
-                    </h3>
-                    <h4 className="text-xl font-bold mb-4">{phase.title}</h4>
+                  
+                  {/* Step Number */}
+                  <div className="text-6xl font-bold text-purple-400/20 mb-4">
+                    {step.number}
                   </div>
-                  <ul className="space-y-2">
-                    {phase.milestones.map((milestone, idx) => (
-                      <li key={idx} className="flex items-center space-x-2 text-white/70">
-                        <Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                        <span className="text-sm">{milestone}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  
+                  {/* Highlight Badge */}
+                  <div className="inline-block bg-purple-500/20 text-purple-300 text-xs px-3 py-1 rounded-full mb-4">
+                    {step.highlight}
+                  </div>
+                  
+                  {/* Icon */}
+                  <div className="mb-4">
+                    <step.icon className="w-8 h-8 text-purple-400" />
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                  
+                  {/* Description */}
+                  <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                    {step.description}
+                  </p>
+                  
+                  {/* Action */}
+                  <div className="border-t border-white/10 pt-3">
+                    <p className="text-purple-300 text-sm font-medium">
+                      {step.action}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
