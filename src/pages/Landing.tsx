@@ -82,7 +82,7 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-background-page text-text-primary">
+    <div className="min-h-screen text-text-primary">
       {/* Hero Section */}
       <section className="pt-32 pb-24 px-8">
         <div className="container mx-auto max-w-5xl">

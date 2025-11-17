@@ -60,8 +60,10 @@ module.exports = {
 				},
 			},
 			fontFamily: {
-				sans: ['Inter', 'system-ui', 'sans-serif'],
-				mono: ['Fira Code', 'Courier New', 'monospace'],
+				// Add "display" for headings
+				display: ['"Space Grotesk"', 'sans-serif'],
+				// Keep "body" for paragraphs
+				body: ['"Inter"', 'sans-serif'],
 			},
 			fontSize: {
 				xs: '12px',

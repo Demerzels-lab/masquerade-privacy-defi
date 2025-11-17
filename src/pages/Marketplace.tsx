@@ -114,7 +114,7 @@ export default function Marketplace() {
   const isYieldAgent = (agentType: string) => !['privacy', 'risk_management'].includes(agentType);
 
   return (
-    <div className="min-h-screen bg-background-page text-text-primary pt-24 pb-12 px-6">
+    <div className="min-h-screen text-text-primary pt-24 pb-12 px-6">
       <div className="container mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -160,12 +160,20 @@ export default function Marketplace() {
           {/* Agent Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAgents.map((agent) => (
+              <motion.div
+      key={agent.id}
+      initial={{ opacity: 0, y: 20 }} // Start invisible and 20px down
+      whileInView={{ opacity: 1, y: 0 }} // Animate to visible and 0px
+      viewport={{ once: true }} // Only animate once
+      transition={{ duration: 0.5 }}
+    >
               <AgentCard
                 key={agent.id}
                 agent={agent}
                 onViewDetails={handleViewDetails}
                 onSelectAgent={handleSelectAgent}
               />
+              </motion.div>
             ))}
           </div>
 
