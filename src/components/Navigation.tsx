@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Menu, X, Wallet } from 'lucide-react';
+import { Menu, X, Wallet } from 'lucide-react';
 import { useState } from 'react';
 import { useWallet } from '../contexts/WalletContext';
 
@@ -25,13 +25,13 @@ export default function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-50/80 backdrop-blur-md border-b border-neutral-400/20">
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-18">
+      <div className="container mx-auto px-8 py-2">
+        <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center space-x-3">
             <div className="relative">
-              <Shield className="w-8 h-8 text-primary-500" />
+              <img src="/logo.jpeg" alt="Masquerade Logo" className="w-8 h-8 md:w-24 md:h-24 rounded" />
               <div className="absolute inset-0 blur-lg opacity-50">
-                <Shield className="w-8 h-8 text-primary-500" />
+                <img src="/logo.jpeg" alt="Masquerade Logo" className="w-8 h-8 rounded" />
               </div>
             </div>
             <span className="text-xl font-bold text-gradient">Masquerade</span>

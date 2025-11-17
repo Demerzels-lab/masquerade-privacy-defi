@@ -84,8 +84,8 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-background-page text-text-primary">
       {/* Hero Section */}
-      <section className="pt-32 pb-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="pt-32 pb-24 px-8">
+        <div className="container mx-auto max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -97,7 +97,7 @@ export default function Landing() {
               <span className="text-sm text-neutral-300">Privacy-Preserving DeFi with AI Agents</span>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-7xl font-bold mb-6 leading-tight max-w-4xl mx-auto">
               <span className="text-gradient">Masquerade</span>
               <br />
               <span className="text-text-primary">Privacy DeFi</span>
@@ -143,8 +143,8 @@ export default function Landing() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 px-6 bg-neutral-50/50">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-8 bg-neutral-50/50">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Platform Key Features</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
@@ -174,8 +174,8 @@ export default function Landing() {
       </section>
 
       {/* Use Cases Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-8">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Use Cases</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
@@ -207,8 +207,8 @@ export default function Landing() {
       </section>
 
       {/* Technology Stack */}
-      <section className="py-24 px-6 bg-neutral-50/50">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-8 bg-neutral-50/50">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Technology Stack</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
@@ -267,8 +267,8 @@ export default function Landing() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-8">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">How the Platform Works</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
@@ -375,7 +375,7 @@ export default function Landing() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6">
+      <section className="py-24 px-8">
         <div className="container mx-auto max-w-4xl">
           <div className="bg-gradient-to-r from-primary-500 to-accent-500 rounded-3xl p-12 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-background-page/10"></div>
