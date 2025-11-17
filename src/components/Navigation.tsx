@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Wallet } from 'lucide-react';
+import { Menu, X, Wallet, Github, Twitter } from 'lucide-react';
 import { useState } from 'react';
 import { useWallet } from '../contexts/WalletContext';
 
@@ -56,6 +56,28 @@ export default function Navigation() {
               </Link>
             ))}
             
+            {/* Social Media Icons */}
+            <div className="ml-4 flex items-center space-x-3">
+              <a
+                href="https://github.com/Demerzels-lab/masquerade-privacy-defi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 text-neutral-300 hover:text-accent-500 transition-all duration-fast hover:terminal-border hover:bg-neutral-100/50 rounded-md"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+              <a
+                href="https://x.com/masqueradedefi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 text-neutral-300 hover:text-accent-500 transition-all duration-fast hover:terminal-border hover:bg-neutral-100/50 rounded-md"
+                aria-label="Twitter/X"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
+            </div>
+            
             {account ? (
               <div className="ml-4 flex items-center space-x-2">
                 <div className="px-4 py-2 bg-neutral-100 rounded-md flex items-center space-x-2 terminal-border">
@@ -108,6 +130,32 @@ export default function Navigation() {
                 {item.name}
               </Link>
             ))}
+            
+            {/* Social Media Icons - Mobile */}
+            <div className="px-4 py-3 border-t terminal-border mt-4 pt-4">
+              <div className="flex items-center justify-center space-x-6">
+                <a
+                  href="https://github.com/Demerzels-lab/masquerade-privacy-defi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 text-neutral-300 hover:text-accent-500 transition-all duration-fast hover:terminal-border hover:bg-neutral-100/50 rounded-md"
+                  aria-label="GitHub"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Github className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://x.com/masqueradedefi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 text-neutral-300 hover:text-accent-500 transition-all duration-fast hover:terminal-border hover:bg-neutral-100/50 rounded-md"
+                  aria-label="Twitter/X"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Twitter className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
             
             {account ? (
               <div className="space-y-2">
