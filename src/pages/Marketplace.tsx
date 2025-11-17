@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Bot, Star, TrendingUp, Shield, Search, Filter } from 'lucide-react';
+import { Bot, Search, Filter, X, Shield, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
+import AgentCard from '../components/marketplace/AgentCard';
+import CapabilitiesDisplay from '../components/marketplace/CapabilitiesDisplay';
+import AgentActivationModal from '../components/marketplace/AgentActivationModal';
 
 interface Agent {
   id: string;
@@ -17,6 +20,10 @@ interface Agent {
   };
   zk_proof_commitment: string;
   trust_model: string;
+  pricing_model?: 'free' | 'subscription' | 'performance' | 'one_time';
+  cost_per_execution?: number;
+  subscription_fee?: number;
+  performance_fee_percentage?: number;
 }
 
 export default function Marketplace() {
@@ -25,6 +32,8 @@ export default function Marketplace() {
   const [selectedType, setSelectedType] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const [activatingAgent, setActivatingAgent] = useState<Agent | null>(null);
+  const [showActivationModal, setShowActivationModal] = useState(false);
 
   useEffect(() => {
     loadAgents();
@@ -55,13 +64,41 @@ export default function Marketplace() {
     }
 
     if (searchQuery) {
+      const query = searchQuery.toLowerCase().trim();
       filtered = filtered.filter(agent =>
-        agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        agent.description.toLowerCase().includes(searchQuery.toLowerCase())
+        agent.name.toLowerCase().includes(query) ||
+        agent.description.toLowerCase().includes(query) ||
+        agent.agent_type.toLowerCase().replace('_', ' ').includes(query)
       );
     }
 
     setFilteredAgents(filtered);
+  };
+
+  const handleViewDetails = (agent: Agent) => {
+    setSelectedAgent(agent);
+  };
+
+  const handleSelectAgent = (agent: Agent) => {
+    setActivatingAgent(agent);
+    setShowActivationModal(true);
+  };
+
+  const handleActivateAgent = async (agentId: string) => {
+    // Simulate agent activation process
+    // In production, this would call an edge function or API
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // TODO: Replace with actual activation logic:
+    // 1. Call edge function to activate agent
+    // 2. Store activation in user_agents table
+    // 3. Initialize agent configuration
+    // 4. Start monitoring agent performance
+    
+    console.log('Agent activated:', agentId);
+    
+    // Reload agents to reflect activation status
+    await loadAgents();
   };
 
   const agentTypes = [
@@ -73,8 +110,11 @@ export default function Marketplace() {
     { value: 'privacy', label: 'Privacy' },
   ];
 
+  // Determine if this agent generates yield
+  const isYieldAgent = (agentType: string) => !['privacy', 'risk_management'].includes(agentType);
+
   return (
-    <div className="min-h-screen bg-background-page text-text-primary pt-24 pb-12 px-6">
+    <div className="min-h-screen text-text-primary pt-24 pb-12 px-6">
       <div className="container mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -121,53 +161,18 @@ export default function Marketplace() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAgents.map((agent) => (
               <motion.div
+      key={agent.id}
+      initial={{ opacity: 0, y: 20 }} // Start invisible and 20px down
+      whileInView={{ opacity: 1, y: 0 }} // Animate to visible and 0px
+      viewport={{ once: true }} // Only animate once
+      transition={{ duration: 0.5 }}
+    >
+              <AgentCard
                 key={agent.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-                onClick={() => setSelectedAgent(agent)}
-                className="bg-neutral-50 rounded-2xl p-6 border border-neutral-400/20 hover:border-accent-500/40 transition-all duration-normal hover:shadow-card-hover cursor-pointer"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-accent-500/10 rounded-lg flex items-center justify-center">
-                    <Bot className="w-6 h-6 text-accent-500" />
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-semantic-warning fill-current" />
-                    <span className="text-sm font-semibold">{agent.reputation_score}</span>
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-semibold mb-2">{agent.name}</h3>
-                <p className="text-sm text-neutral-300 mb-4 line-clamp-2">{agent.description}</p>
-
-                <div className="flex items-center space-x-2 mb-4">
-                  <span className="px-2 py-1 bg-primary-500/10 text-primary-500 rounded text-xs font-medium capitalize">
-                    {agent.agent_type.replace('_', ' ')}
-                  </span>
-                  <span className="px-2 py-1 bg-neutral-100 text-neutral-300 rounded text-xs font-medium capitalize">
-                    {agent.trust_model}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-neutral-400/20">
-                  <div>
-                    <p className="text-xs text-neutral-300 mb-1">Success Rate</p>
-                    <p className="text-sm font-semibold text-semantic-success">
-                      {agent.performance_metrics.successRate.toFixed(1)}%
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-neutral-300 mb-1">Avg APY</p>
-                    <p className="text-sm font-semibold text-primary-500">
-                      {agent.performance_metrics.averageApy.toFixed(1)}%
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-neutral-300 mb-1">Executions</p>
-                    <p className="text-sm font-semibold">{agent.performance_metrics.totalExecutions}</p>
-                  </div>
-                </div>
+                agent={agent}
+                onViewDetails={handleViewDetails}
+                onSelectAgent={handleSelectAgent}
+              />
               </motion.div>
             ))}
           </div>
@@ -201,13 +206,15 @@ export default function Marketplace() {
               </div>
               <button
                 onClick={() => setSelectedAgent(null)}
-                className="text-neutral-300 hover:text-text-primary"
+                className="text-neutral-300 hover:text-text-primary transition-colors"
+                aria-label="Close modal"
               >
-                ✕
+                <X className="w-6 h-6" />
               </button>
             </div>
 
             <div className="space-y-6">
+              {/* ZK Verification */}
               <div>
                 <h3 className="text-lg font-semibold mb-3 flex items-center">
                   <Shield className="w-5 h-5 text-primary-500 mr-2" />
@@ -218,6 +225,7 @@ export default function Marketplace() {
                 </div>
               </div>
 
+              {/* Performance Metrics */}
               <div>
                 <h3 className="text-lg font-semibold mb-3 flex items-center">
                   <TrendingUp className="w-5 h-5 text-accent-500 mr-2" />
@@ -232,9 +240,18 @@ export default function Marketplace() {
                   </div>
                   <div className="p-4 bg-neutral-50 rounded-lg">
                     <p className="text-sm text-neutral-300 mb-1">Avg APY</p>
-                    <p className="text-2xl font-bold text-primary-500">
-                      {selectedAgent.performance_metrics.averageApy.toFixed(1)}%
-                    </p>
+                    {isYieldAgent(selectedAgent.agent_type) ? (
+                      <p className="text-2xl font-bold text-primary-500">
+                        {selectedAgent.performance_metrics.averageApy.toFixed(1)}%
+                      </p>
+                    ) : (
+                      <div className="group relative">
+                        <p className="text-2xl font-bold text-neutral-300">N/A</p>
+                        <div className="invisible group-hover:visible absolute bottom-full left-0 mb-2 px-3 py-2 bg-neutral-200 text-xs text-text-primary rounded shadow-lg z-10 w-48">
+                          This agent focuses on {selectedAgent.agent_type === 'privacy' ? 'privacy protection' : 'risk management'}, not yield generation
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="p-4 bg-neutral-50 rounded-lg">
                     <p className="text-sm text-neutral-300 mb-1">Executions</p>
@@ -243,22 +260,48 @@ export default function Marketplace() {
                 </div>
               </div>
 
+              {/* Capabilities */}
               <div>
                 <h3 className="text-lg font-semibold mb-3">Capabilities</h3>
-                <div className="p-4 bg-neutral-50 rounded-lg">
-                  <pre className="text-sm text-neutral-300 overflow-x-auto">
-                    {JSON.stringify(selectedAgent.capabilities, null, 2)}
-                  </pre>
-                </div>
+                <CapabilitiesDisplay 
+                  capabilities={selectedAgent.capabilities} 
+                  agentType={selectedAgent.agent_type}
+                />
               </div>
 
-              <button className="w-full px-6 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow">
-                Activate Agent
-              </button>
+              {/* Action Buttons */}
+              <div className="flex space-x-3 pt-2">
+                <button
+                  onClick={() => setSelectedAgent(null)}
+                  className="flex-1 px-6 py-4 bg-neutral-50 text-neutral-300 rounded-xl font-semibold hover:bg-neutral-200 hover:text-text-primary transition-all duration-fast"
+                >
+                  Close
+                </button>
+                <button
+                  onClick={() => {
+                    handleSelectAgent(selectedAgent);
+                    setSelectedAgent(null);
+                  }}
+                  className="flex-1 px-6 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow"
+                >
+                  Activate Agent
+                </button>
+              </div>
             </div>
           </motion.div>
         </div>
       )}
+
+      {/* Agent Activation Modal */}
+      <AgentActivationModal
+        agent={activatingAgent}
+        isOpen={showActivationModal}
+        onClose={() => {
+          setShowActivationModal(false);
+          setActivatingAgent(null);
+        }}
+        onActivate={handleActivateAgent}
+      />
     </div>
   );
 }

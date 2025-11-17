@@ -82,25 +82,28 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-background-page text-text-primary">
-      {/* Hero Section */}
-      <section className="pt-32 pb-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+    <div className="min-h-screen text-text-primary">
+      {/* Hero Section - Terminal Style */}
+      <section className="relative pt-32 pb-24 px-8">
+        {/* Coordinate Label */}
+        <div className="coordinate-label absolute top-24 left-8">X:0 Y:0</div>
+        
+        <div className="container mx-auto max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-neutral-50 rounded-full mb-6 border border-primary-500/20">
-              <Shield className="w-4 h-4 text-primary-500" />
-              <span className="text-sm text-neutral-300">Privacy-Preserving DeFi with AI Agents</span>
+            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-neutral-50/80 backdrop-blur-sm rounded-sm mb-6 terminal-border">
+              <Shield className="w-4 h-4 text-accent-500" />
+              <span className="text-sm text-neutral-300 uppercase tracking-wider">Privacy-Preserving DeFi with AI Agents</span>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-gradient">Masquerade</span>
+            <h1 className="text-4xl md:text-7xl font-bold mb-6 leading-tight max-w-4xl mx-auto terminal-text">
+              <span className="text-gradient uppercase tracking-tight">MASQUERADE</span>
               <br />
-              <span className="text-text-primary">Privacy DeFi</span>
+              <span className="text-text-primary uppercase">PRIVACY DEFI</span>
             </h1>
             
             <p className="text-xl text-neutral-300 mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -111,21 +114,21 @@ export default function Landing() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 to="/auth"
-                className="px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow hover:scale-105 flex items-center space-x-2"
+                className="px-8 py-4 bg-accent-500/20 border border-accent-500/50 text-accent-500 rounded-sm font-semibold hover:bg-accent-500/30 hover:border-accent-500 transition-all duration-fast shadow-glow hover:shadow-glow-strong flex items-center space-x-2 uppercase tracking-wider"
               >
-                <span>Start Anonymous Trading</span>
+                <span>START ANONYMOUS TRADING</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 to="/marketplace"
-                className="px-8 py-4 bg-transparent border-2 border-primary-500 text-primary-500 rounded-xl font-semibold hover:bg-primary-500 hover:text-white transition-all duration-fast"
+                className="px-8 py-4 bg-transparent border border-neutral-400/30 text-neutral-300 rounded-sm font-semibold hover:terminal-border-hover hover:text-text-primary transition-all duration-fast uppercase tracking-wider"
               >
-                Explore AI Agents
+                EXPLORE AI AGENTS
               </Link>
             </div>
           </motion.div>
 
-          {/* Stats */}
+          {/* Stats - Terminal Cards */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -133,20 +136,22 @@ export default function Landing() {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
           >
             {stats.map((stat, index) => (
-              <div key={index} className="bg-neutral-50 rounded-xl p-6 border border-neutral-400/20 hover:border-primary-500/40 transition-all duration-normal">
-                <div className="text-3xl font-bold text-primary-500 mb-2">{stat.value}</div>
-                <div className="text-sm text-neutral-300">{stat.label}</div>
+              <div key={index} className="relative bg-neutral-50/80 backdrop-blur-sm rounded-sm p-6 terminal-border hover:terminal-border-hover transition-all duration-normal group">
+                {/* Coordinate Label untuk setiap card */}
+                <div className="coordinate-label absolute top-2 left-2">X:{index} Y:1</div>
+                <div className="text-3xl font-bold text-accent-500 mb-2 terminal-text mt-3">{stat.value}</div>
+                <div className="text-sm text-neutral-300 uppercase tracking-wide">{stat.label}</div>
               </div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 px-6 bg-neutral-50/50">
-        <div className="container mx-auto max-w-6xl">
+      {/* Features Section - Terminal Style */}
+      <section className="py-24 px-8 bg-neutral-50/30 border-y terminal-border">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Platform Key Features</h2>
+            <h2 className="text-4xl font-bold mb-4 terminal-text uppercase tracking-wide">PLATFORM KEY FEATURES</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
               Cutting-edge technology for maximum privacy and automation in DeFi
             </p>
@@ -160,12 +165,15 @@ export default function Landing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-background-surface rounded-2xl p-8 border border-neutral-400/20 hover:border-primary-500/40 transition-all duration-normal hover:shadow-card-hover group"
+                className="relative bg-background-surface/80 backdrop-blur-sm rounded-md p-8 terminal-border hover:terminal-border-hover transition-all duration-normal hover:shadow-card-hover group"
               >
-                <div className="w-12 h-12 bg-primary-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-glow transition-all duration-normal">
-                  <feature.icon className="w-6 h-6 text-primary-500" />
+                {/* Coordinate Label */}
+                <div className="coordinate-label absolute top-2 left-2">X:{index} Y:2</div>
+                
+                <div className="w-12 h-12 bg-accent-500/10 rounded-md flex items-center justify-center mb-6 terminal-border group-hover:shadow-glow transition-all duration-normal mt-4">
+                  <feature.icon className="w-6 h-6 text-accent-500" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 terminal-text uppercase tracking-wide">{feature.title}</h3>
                 <p className="text-neutral-300 leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
@@ -174,8 +182,8 @@ export default function Landing() {
       </section>
 
       {/* Use Cases Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-8">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Use Cases</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
@@ -191,11 +199,12 @@ export default function Landing() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-neutral-50 rounded-2xl p-8 border border-neutral-400/20 hover:shadow-card-hover transition-all duration-normal"
+                className="relative bg-neutral-50/80 backdrop-blur-sm rounded-sm p-8 terminal-border hover:shadow-card-hover transition-all duration-normal"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold">{useCase.title}</h3>
-                  <div className="px-3 py-1 bg-semantic-success/20 text-semantic-success rounded-lg text-sm font-semibold">
+                <div className="coordinate-label absolute top-2 left-2">X:{index} Y:3</div>
+                <div className="flex items-center justify-between mb-4 mt-3">
+                  <h3 className="text-xl font-semibold terminal-text uppercase tracking-wide">{useCase.title}</h3>
+                  <div className="px-3 py-1 bg-semantic-success/20 border border-semantic-success/30 text-semantic-success rounded-sm text-sm font-semibold">
                     {useCase.apy} APY
                   </div>
                 </div>
@@ -207,8 +216,8 @@ export default function Landing() {
       </section>
 
       {/* Technology Stack */}
-      <section className="py-24 px-6 bg-neutral-50/50">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-8 bg-neutral-50/50">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Technology Stack</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
@@ -267,8 +276,8 @@ export default function Landing() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="py-24 px-8">
+        <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">How the Platform Works</h2>
             <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
@@ -375,7 +384,7 @@ export default function Landing() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6">
+      <section className="py-24 px-8">
         <div className="container mx-auto max-w-4xl">
           <div className="bg-gradient-to-r from-primary-500 to-accent-500 rounded-3xl p-12 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-background-page/10"></div>

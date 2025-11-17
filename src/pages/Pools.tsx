@@ -1,37 +1,130 @@
-import { useState } from 'react';
-import { Shield, Droplet, ArrowRight, Eye, EyeOff, Copy, Check } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Shield, Droplet, ArrowRight, Eye, EyeOff, Copy, Check, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PrivacyScoreBreakdown from '@/components/pools/PrivacyScoreBreakdown';
+import GasEstimator from '@/components/pools/GasEstimator';
+import TransactionTracker, { Transaction } from '@/components/pools/TransactionTracker';
+import SecurityAudit from '@/components/pools/SecurityAudit';
+import { calculatePrivacyScore, estimateGasCost } from '@/utils/privacyCalculations';
 
 export default function Pools() {
   const [depositAmount, setDepositAmount] = useState('');
-  const [privacyLevel, setPrivacyLevel] = useState('standard');
+  const [privacyLevel, setPrivacyLevel] = useState<'standard' | 'advanced' | 'maximum'>('standard');
   const [generatedAddress, setGeneratedAddress] = useState('');
   const [copied, setCopied] = useState(false);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [showSecurityInfo, setShowSecurityInfo] = useState(false);
 
   const privacyLevels = [
     {
-      value: 'standard',
+      value: 'standard' as const,
       label: 'Standard',
       description: 'Basic transaction mixing',
       anonymitySet: '100+ users',
     },
     {
-      value: 'advanced',
+      value: 'advanced' as const,
       label: 'Advanced',
       description: 'Enhanced mixing with timing randomization',
       anonymitySet: '500+ users',
     },
     {
-      value: 'maximum',
+      value: 'maximum' as const,
       label: 'Maximum',
       description: 'Maximum anonymity with multiple hops',
       anonymitySet: '1000+ users',
     },
   ];
 
+  // Data pool aktual (dalam aplikasi nyata, ini dari API/blockchain)
+  const poolData = {
+    poolSize: 52000000, // $52M
+    activeMixers: 2345,
+    anonymitySet: 10000,
+  };
+
+  // Hitung privacy score dengan metodologi transparan
+  const privacyMetrics = useMemo(() => {
+    return calculatePrivacyScore(
+      poolData.poolSize,
+      poolData.activeMixers,
+      poolData.anonymitySet,
+      privacyLevel
+    );
+  }, [poolData, privacyLevel]);
+
+  // Estimasi gas dan biaya
+  const gasEstimate = useMemo(() => {
+    const amount = parseFloat(depositAmount) || 0;
+    return estimateGasCost(amount, privacyLevel);
+  }, [depositAmount, privacyLevel]);
+
   const generateStealthAddress = () => {
     const address = `0x${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
     setGeneratedAddress(address);
+
+    // Simulasi transaksi
+    const newTx: Transaction = {
+      id: `tx-${Date.now()}`,
+      type: 'stealth_gen',
+      status: 'processing',
+      timestamp: new Date(),
+    };
+    setTransactions(prev => [newTx, ...prev]);
+
+    // Simulasi success setelah 2 detik
+    setTimeout(() => {
+      setTransactions(prev =>
+        prev.map(tx =>
+          tx.id === newTx.id
+            ? { ...tx, status: 'success', txHash: `0x${Math.random().toString(16).substring(2, 66)}` }
+            : tx
+        )
+      );
+    }, 2000);
+  };
+
+  const handleDeposit = () => {
+    if (!depositAmount || parseFloat(depositAmount) <= 0) {
+      alert('Please enter a valid deposit amount');
+      return;
+    }
+
+    // Simulasi transaksi deposit
+    const newTx: Transaction = {
+      id: `tx-${Date.now()}`,
+      type: 'deposit',
+      amount: depositAmount,
+      privacyLevel: privacyLevel,
+      status: 'pending',
+      timestamp: new Date(),
+    };
+    setTransactions(prev => [newTx, ...prev]);
+
+    // Simulasi processing
+    setTimeout(() => {
+      setTransactions(prev =>
+        prev.map(tx =>
+          tx.id === newTx.id ? { ...tx, status: 'processing' } : tx
+        )
+      );
+    }, 1000);
+
+    // Simulasi success/error setelah beberapa detik
+    const isSuccess = Math.random() > 0.1; // 90% success rate
+    const delay = privacyLevel === 'maximum' ? 5000 : privacyLevel === 'advanced' ? 3000 : 2000;
+
+    setTimeout(() => {
+      setTransactions(prev =>
+        prev.map(tx =>
+          tx.id === newTx.id
+            ? isSuccess
+              ? { ...tx, status: 'success', txHash: `0x${Math.random().toString(16).substring(2, 66)}` }
+              : { ...tx, status: 'error', errorMessage: 'Insufficient gas or network error' }
+            : tx
+        )
+      );
+    }, delay);
   };
 
   const copyAddress = () => {
@@ -41,15 +134,31 @@ export default function Pools() {
   };
 
   const poolStats = [
-    { label: 'Total Pool Size', value: '$52M' },
-    { label: 'Active Mixers', value: '2,345' },
-    { label: 'Anonymity Set', value: '10,000+' },
-    { label: 'Privacy Score', value: '98.5%' },
+    { 
+      label: 'Total Pool Size', 
+      value: '$52M',
+      tooltip: 'Total funds available in privacy pool'
+    },
+    { 
+      label: 'Active Mixers', 
+      value: '2,345',
+      tooltip: 'Active users currently mixing'
+    },
+    { 
+      label: 'Anonymity Set', 
+      value: '10,000+',
+      tooltip: 'Total users in anonymity set - larger means more anonymous'
+    },
+    { 
+      label: 'Privacy Score', 
+      value: `${privacyMetrics.totalScore}%`,
+      tooltip: 'Privacy score based on transparent methodology'
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-background-page text-text-primary pt-24 pb-12 px-6">
-      <div className="container mx-auto max-w-6xl">
+    <div className="min-h-screen text-text-primary pt-24 pb-12 px-6">
+      <div className="container mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -59,27 +168,58 @@ export default function Pools() {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-2">Privacy Pools</h1>
             <p className="text-neutral-300">Transaction mixing and stealth addresses for enhanced anonymity</p>
+            
+            {/* Security Info Toggle */}
+            <button
+              onClick={() => setShowSecurityInfo(!showSecurityInfo)}
+              className="mt-4 inline-flex items-center space-x-2 px-4 py-2 bg-semantic-success/10 text-semantic-success rounded-lg hover:bg-semantic-success/20 transition-all"
+            >
+              <Shield className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                {showSecurityInfo ? 'Hide' : 'View'} Security Audit & Bug Bounty
+              </span>
+            </button>
           </div>
 
-          {/* Pool Stats */}
+          {/* Security Audit Section (Conditional) */}
+          {showSecurityInfo && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mb-12"
+            >
+              <SecurityAudit />
+            </motion.div>
+          )}
+
+          {/* Pool Stats dengan Tooltip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             {poolStats.map((stat, index) => (
               <div
                 key={index}
-                className="bg-neutral-50 rounded-xl p-4 border border-neutral-400/20"
+                className="bg-neutral-50 rounded-xl p-4 border border-neutral-400/20 group relative"
               >
-                <p className="text-sm text-neutral-300 mb-1">
-                  {stat.label === 'Total Pool Size' ? 'Total Pool Size' : 
-                   stat.label === 'Active Mixers' ? 'Active Mixers' :
-                   stat.label === 'Anonymity Set' ? 'Anonymity Set' : 
-                   'Privacy Score'}
-                </p>
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-sm text-neutral-300">{stat.label}</p>
+                  <Info className="w-3 h-3 text-neutral-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
                 <p className="text-2xl font-bold text-primary-500">{stat.value}</p>
+                
+                {/* Tooltip */}
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-neutral-100 text-xs text-neutral-300 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none w-48 text-center z-10">
+                  {stat.tooltip}
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          {/* Privacy Score Breakdown */}
+          <div className="mb-8">
+            <PrivacyScoreBreakdown metrics={privacyMetrics} />
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 mb-8">
             {/* Deposit Interface */}
             <div className="bg-neutral-50 rounded-2xl p-8 border border-neutral-400/20">
               <h2 className="text-2xl font-bold mb-6 flex items-center">
@@ -95,6 +235,8 @@ export default function Pools() {
                     value={depositAmount}
                     onChange={(e) => setDepositAmount(e.target.value)}
                     placeholder="0.00"
+                    min="0"
+                    step="0.01"
                     className="w-full px-4 py-3 bg-neutral-100 border border-neutral-400/20 rounded-lg text-text-primary placeholder-neutral-300 focus:outline-none focus:border-primary-500"
                   />
                 </div>
@@ -122,7 +264,20 @@ export default function Pools() {
                   </div>
                 </div>
 
-                <button className="w-full px-6 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow flex items-center justify-center space-x-2">
+                {/* Gas Estimator */}
+                {depositAmount && parseFloat(depositAmount) > 0 && (
+                  <GasEstimator 
+                    estimate={gasEstimate} 
+                    amount={depositAmount}
+                    privacyLevel={privacyLevel}
+                  />
+                )}
+
+                <button 
+                  onClick={handleDeposit}
+                  disabled={!depositAmount || parseFloat(depositAmount) <= 0}
+                  className="w-full px-6 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   <span>Deposit to Pool</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
@@ -198,8 +353,16 @@ export default function Pools() {
             </div>
           </div>
 
+          {/* Transaction Tracker */}
+          <div className="mb-8">
+            <TransactionTracker 
+              transactions={transactions}
+              onClearAll={() => setTransactions([])}
+            />
+          </div>
+
           {/* Privacy Metrics */}
-          <div className="mt-12 bg-neutral-50 rounded-2xl p-8 border border-neutral-400/20">
+          <div className="bg-neutral-50 rounded-2xl p-8 border border-neutral-400/20">
             <h2 className="text-2xl font-bold mb-6">Privacy Status</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="flex items-center space-x-4">
@@ -208,7 +371,7 @@ export default function Pools() {
                 </div>
                 <div>
                   <p className="text-sm text-neutral-300">Current Privacy Level</p>
-                  <p className="text-xl font-bold text-semantic-success">Maximum</p>
+                  <p className="text-xl font-bold text-semantic-success capitalize">{privacyLevel}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -217,7 +380,11 @@ export default function Pools() {
                 </div>
                 <div>
                   <p className="text-sm text-neutral-300">Pool Participation</p>
-                  <p className="text-xl font-bold">Active</p>
+                  <p className="text-xl font-bold">
+                    {transactions.filter(tx => tx.status === 'success' && tx.type === 'deposit').length > 0 
+                      ? 'Active' 
+                      : 'Inactive'}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -226,7 +393,7 @@ export default function Pools() {
                 </div>
                 <div>
                   <p className="text-sm text-neutral-300">Anonymity Score</p>
-                  <p className="text-xl font-bold text-accent-500">98.5%</p>
+                  <p className="text-xl font-bold text-accent-500">{privacyMetrics.totalScore}%</p>
                 </div>
               </div>
             </div>
