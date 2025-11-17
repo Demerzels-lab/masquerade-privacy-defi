@@ -77,7 +77,7 @@ export default function AgentActivationModal({
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-background-page/80 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+          className="fixed inset-0 bg-background-page/90 backdrop-blur-md z-50 flex items-center justify-center p-6"
           onClick={onClose}
         >
           <motion.div
@@ -86,62 +86,65 @@ export default function AgentActivationModal({
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-neutral-100 rounded-2xl p-8 max-w-md w-full border border-neutral-400/20 shadow-modal"
+            className="relative bg-neutral-100/95 backdrop-blur-sm rounded-md p-8 max-w-md w-full terminal-border shadow-modal"
           >
+            {/* Coordinate Label */}
+            <div className="coordinate-label absolute top-2 left-2">MODAL:ACTIVATION</div>
+
             {/* Icon */}
-            <div className="w-16 h-16 bg-primary-500/10 rounded-xl flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-accent-500/10 rounded-md flex items-center justify-center mx-auto mb-6 mt-4 terminal-border shadow-glow">
               {activationStatus === 'success' ? (
                 <CheckCircle2 className="w-8 h-8 text-semantic-success" />
               ) : activationStatus === 'error' ? (
                 <AlertCircle className="w-8 h-8 text-semantic-error" />
               ) : (
-                <Bot className="w-8 h-8 text-primary-500" />
+                <Bot className="w-8 h-8 text-accent-500" />
               )}
             </div>
 
             {/* Content based on status */}
             {activationStatus === 'idle' && (
               <>
-                <h2 className="text-2xl font-bold text-center mb-3">Activate Agent</h2>
+                <h2 className="text-2xl font-bold text-center mb-3 terminal-text uppercase tracking-wide">ACTIVATE AGENT</h2>
                 <p className="text-neutral-300 text-center mb-6">
-                  Are you sure you want to activate <span className="font-semibold text-text-primary">{agent.name}</span>?
+                  Are you sure you want to activate <span className="font-semibold text-accent-500 terminal-text">{agent.name}</span>?
                 </p>
 
                 {/* Pricing Info */}
-                <div className="p-4 bg-neutral-50 rounded-lg mb-6">
-                  <p className="text-sm font-semibold text-text-primary mb-2">Pricing</p>
+                <div className="p-4 bg-neutral-50/50 rounded-sm mb-6 terminal-border">
+                  <p className="text-sm font-semibold text-text-primary mb-2 uppercase tracking-wider">PRICING</p>
                   <p className="text-sm text-neutral-300">{getPricingText()}</p>
                 </div>
 
                 {/* Terms */}
-                <div className="p-4 bg-primary-500/5 border border-primary-500/20 rounded-lg mb-6">
+                <div className="p-4 bg-accent-500/5 border border-accent-500/30 rounded-sm mb-6">
                   <p className="text-xs text-neutral-300">
                     By activating this agent, you agree to the terms and conditions. 
                     The agent will start executing automated strategies on your behalf.
                   </p>
                 </div>
 
-                {/* Buttons */}
+                {/* Buttons - Terminal Style */}
                 <div className="flex space-x-3">
                   <button
                     onClick={onClose}
                     disabled={isActivating}
-                    className="flex-1 px-6 py-3 bg-neutral-50 text-neutral-300 rounded-xl font-semibold hover:bg-neutral-200 hover:text-text-primary transition-all duration-fast disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 px-6 py-3 bg-neutral-50/50 text-neutral-300 rounded-sm font-semibold hover:bg-neutral-200 hover:text-text-primary transition-all duration-fast disabled:opacity-50 disabled:cursor-not-allowed terminal-border uppercase tracking-wider text-sm"
                   >
-                    Cancel
+                    CANCEL
                   </button>
                   <button
                     onClick={handleActivate}
                     disabled={isActivating}
-                    className="flex-1 px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all duration-fast shadow-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                    className="flex-1 px-6 py-3 bg-accent-500/20 border border-accent-500/50 text-accent-500 rounded-sm font-semibold hover:bg-accent-500/30 hover:border-accent-500 transition-all duration-fast shadow-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 uppercase tracking-wider text-sm"
                   >
                     {isActivating ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Activating...</span>
+                        <span>ACTIVATING...</span>
                       </>
                     ) : (
-                      <span>Activate</span>
+                      <span>ACTIVATE &gt;</span>
                     )}
                   </button>
                 </div>
@@ -150,20 +153,20 @@ export default function AgentActivationModal({
 
             {activationStatus === 'processing' && (
               <>
-                <h2 className="text-2xl font-bold text-center mb-3">Activating Agent</h2>
+                <h2 className="text-2xl font-bold text-center mb-3 terminal-text uppercase tracking-wide">ACTIVATING AGENT</h2>
                 <p className="text-neutral-300 text-center mb-6">
                   Please wait while we activate {agent.name}...
                 </p>
                 <div className="flex justify-center">
-                  <Loader2 className="w-12 h-12 text-primary-500 animate-spin" />
+                  <Loader2 className="w-12 h-12 text-accent-500 animate-spin" />
                 </div>
               </>
             )}
 
             {activationStatus === 'success' && (
               <>
-                <h2 className="text-2xl font-bold text-center mb-3 text-semantic-success">
-                  Agent Activated!
+                <h2 className="text-2xl font-bold text-center mb-3 text-semantic-success terminal-text uppercase tracking-wide">
+                  AGENT ACTIVATED!
                 </h2>
                 <p className="text-neutral-300 text-center mb-6">
                   {agent.name} has been successfully activated and will start working shortly.
@@ -173,15 +176,15 @@ export default function AgentActivationModal({
 
             {activationStatus === 'error' && (
               <>
-                <h2 className="text-2xl font-bold text-center mb-3 text-semantic-error">
-                  Activation Failed
+                <h2 className="text-2xl font-bold text-center mb-3 text-semantic-error terminal-text uppercase tracking-wide">
+                  ACTIVATION FAILED
                 </h2>
                 <p className="text-neutral-300 text-center mb-6">{errorMessage}</p>
                 <button
                   onClick={onClose}
-                  className="w-full px-6 py-3 bg-neutral-50 text-neutral-300 rounded-xl font-semibold hover:bg-neutral-200 hover:text-text-primary transition-all duration-fast"
+                  className="w-full px-6 py-3 bg-neutral-50/50 text-neutral-300 rounded-sm font-semibold hover:bg-neutral-200 hover:text-text-primary transition-all duration-fast terminal-border uppercase tracking-wider text-sm"
                 >
-                  Close
+                  CLOSE
                 </button>
               </>
             )}
