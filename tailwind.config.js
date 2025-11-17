@@ -98,10 +98,12 @@ module.exports = {
 				full: '9999px',
 			},
 			boxShadow: {
-				card: '0 4px 12px rgba(99, 102, 241, 0.1), 0 2px 4px rgba(0, 0, 0, 0.8)',
-				'card-hover': '0 8px 24px rgba(99, 102, 241, 0.2), 0 4px 8px rgba(0, 0, 0, 0.9)',
-				glow: '0 0 20px rgba(139, 92, 246, 0.3)',
-				modal: '0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(99, 102, 241, 0.1)',
+				card: '0 0 1px rgba(139, 92, 246, 0.5), 0 4px 12px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(139, 92, 246, 0.05)',
+				'card-hover': '0 0 2px rgba(139, 92, 246, 0.8), 0 8px 24px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(139, 92, 246, 0.1)',
+				glow: '0 0 20px rgba(139, 92, 246, 0.5), 0 0 40px rgba(139, 92, 246, 0.2)',
+				'glow-strong': '0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(139, 92, 246, 0.4)',
+				modal: '0 20px 60px rgba(0, 0, 0, 0.95), 0 0 80px rgba(139, 92, 246, 0.3)',
+				terminal: '0 0 1px rgba(139, 92, 246, 0.6), inset 0 0 20px rgba(139, 92, 246, 0.08)',
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',

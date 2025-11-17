@@ -8,14 +8,14 @@ import Marketplace from './pages/Marketplace';
 import Pools from './pages/Pools';
 import DeFi from './pages/DeFi';
 import Settings from './pages/Settings';
-import AnimatedPurpleBackground from './components/AnimatedPurpleBackground';
+import TerminalGridBackground from './components/TerminalGridBackground';
 
 function App() {
   return (
     <WalletProvider>
       <Router>
         <div className="min-h-screen"> 
-          <AnimatedPurpleBackground /> 
+          <TerminalGridBackground /> 
           <Navigation />
           <Routes>
             <Route path="/" element={<Landing />} />

@@ -21,13 +21,15 @@ export default function PricingBadge({
           detail: 'No cost',
           bgColor: 'bg-semantic-success/10',
           textColor: 'text-semantic-success',
+          borderColor: 'border-semantic-success/30',
         };
       case 'subscription':
         return {
           label: 'SUBSCRIPTION',
           detail: `$${subscriptionFee}/month`,
-          bgColor: 'bg-primary-500/10',
-          textColor: 'text-primary-500',
+          bgColor: 'bg-accent-500/10',
+          textColor: 'text-accent-500',
+          borderColor: 'border-accent-500/30',
         };
       case 'performance':
         return {
@@ -35,6 +37,7 @@ export default function PricingBadge({
           detail: `${performanceFeePercentage}% of profit`,
           bgColor: 'bg-accent-500/10',
           textColor: 'text-accent-500',
+          borderColor: 'border-accent-500/30',
         };
       case 'one_time':
         return {
@@ -42,6 +45,7 @@ export default function PricingBadge({
           detail: `$${costPerExecution}/execution`,
           bgColor: 'bg-semantic-warning/10',
           textColor: 'text-semantic-warning',
+          borderColor: 'border-semantic-warning/30',
         };
       default:
         return {
@@ -49,6 +53,7 @@ export default function PricingBadge({
           detail: 'No cost',
           bgColor: 'bg-neutral-100',
           textColor: 'text-neutral-300',
+          borderColor: 'border-neutral-400/30',
         };
     }
   };
@@ -56,10 +61,10 @@ export default function PricingBadge({
   const pricing = getPricingDisplay();
 
   return (
-    <div className={`${pricing.bgColor} ${pricing.textColor} rounded-lg p-3 flex items-start space-x-2`}>
+    <div className={`${pricing.bgColor} ${pricing.textColor} rounded-sm p-3 flex items-start space-x-2 border ${pricing.borderColor} terminal-text`}>
       <DollarSign className="w-4 h-4 flex-shrink-0 mt-0.5" />
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wide">{pricing.label}</p>
+        <p className="text-xs font-semibold uppercase tracking-wider">{pricing.label}</p>
         <p className="text-sm font-medium mt-0.5">{pricing.detail}</p>
       </div>
     </div>
