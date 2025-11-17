@@ -8,7 +8,17 @@ export default function Navigation() {
   const location = useLocation();
   const { account, connectWallet, disconnectWallet, isConnecting } = useWallet();
 
-  // Removed navItems for clean navbar
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Marketplace', path: '/marketplace' },
+    { name: 'Privacy Pools', path: '/pools' },
+    { name: 'DeFi', path: '/defi' },
+    { name: 'Settings', path: '/settings' },
+  ];
+
+  // Check if we're on landing page
+  const isLandingPage = location.pathname === '/';
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -35,7 +45,26 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* Social Media Icons */}
+            {/* Show full navbar for non-landing pages */}
+            {!isLandingPage && (
+              <>
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-fast uppercase tracking-wider ${
+                      isActive(item.path)
+                        ? 'text-accent-500 bg-neutral-100 terminal-border'
+                        : 'text-neutral-300 hover:text-text-primary hover:terminal-border hover:bg-neutral-100/50'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </>
+            )}
+            
+            {/* Social Media Icons - Always show */}
             <div className="flex items-center space-x-3">
               <a
                 href="https://github.com/Demerzels-lab/masquerade-privacy-defi"
@@ -82,7 +111,7 @@ export default function Navigation() {
               </button>
             )}
             
-            {/* Entry Button to Dashboard */}
+            {/* Entry Button to Dashboard - Always show */}
             <Link
               to="/dashboard"
               className="px-6 py-2 bg-purple-500/20 border border-purple-500/50 text-purple-300 rounded-md font-medium hover:bg-purple-500/30 hover:border-purple-500 transition-all duration-fast hover:shadow-glow uppercase tracking-wider flex items-center space-x-2"
@@ -104,6 +133,26 @@ export default function Navigation() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2 border-t terminal-border mt-2">
+            {/* Show full navbar for non-landing pages */}
+            {!isLandingPage && (
+              <>
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-md text-sm font-medium transition-all duration-fast uppercase tracking-wider ${
+                      isActive(item.path)
+                        ? 'text-accent-500 bg-neutral-100 terminal-border'
+                        : 'text-neutral-300 hover:text-text-primary hover:bg-neutral-100/50'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </>
+            )}
+            
             {/* Entry Button to Dashboard - Mobile */}
             <Link
               to="/dashboard"

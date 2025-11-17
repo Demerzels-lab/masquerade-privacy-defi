@@ -169,28 +169,28 @@ export default function Landing() {
 
               {/* Right Column - Feature Cards */}
               <div className="lg:col-span-2 order-1 lg:order-2">
-                {/* Desktop: Overlapping layout */}
-                <div className="hidden lg:block relative h-[400px] lg:h-[500px]">
+                {/* Desktop: Improved overlapping layout with better spacing */}
+                <div className="hidden lg:block relative h-[600px]">
                   {visionFeatures.map((feature, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.2 }}
-                      className={`overlay-block absolute p-6 ${
-                        index === 0 ? 'top-0 left-0' :
-                        index === 1 ? 'top-16 left-16 z-10' :
-                        'top-32 left-32 z-20'
+                      className={`overlay-block absolute p-8 ${
+                        index === 0 ? 'top-0 left-0 w-80' :
+                        index === 1 ? 'top-24 left-24 z-10 w-80' :
+                        'top-48 left-48 z-20 w-80'
                       }`}
                     >
                       <div className="coordinate-label text-white/30 text-xs">
                         X:{index + 2} Y:1
                       </div>
-                      <div className="flex items-center space-x-3 mb-3">
-                        <feature.icon className="w-6 h-6 text-purple-400" />
-                        <h3 className="text-lg lg:text-xl font-semibold">{feature.title}</h3>
+                      <div className="flex items-center space-x-4 mb-4">
+                        <feature.icon className="w-8 h-8 text-purple-400 flex-shrink-0" />
+                        <h3 className="text-xl font-semibold">{feature.title}</h3>
                       </div>
-                      <p className="text-white/70 text-sm lg:text-base">{feature.description}</p>
+                      <p className="text-white/70 text-base leading-relaxed">{feature.description}</p>
                     </motion.div>
                   ))}
                 </div>
