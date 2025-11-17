@@ -143,44 +143,44 @@ export default function Landing() {
       {/* Scroll Snap Container */}
       <div className="scroll-snap-container">
         {/* Section 1: THE VISION */}
-        <section className="min-h-screen flex items-center justify-center px-8 py-24 scroll-snap-start">
+        <section className="min-h-screen flex items-center justify-center px-4 sm:px-8 py-24 scroll-snap-start">
           {/* Coordinate Label */}
-          <div className="coordinate-label absolute top-24 left-8 text-white/50 text-sm">X:0 Y:0</div>
+          <div className="coordinate-label absolute top-20 left-4 text-white/50 text-xs">X:0 Y:0</div>
           
           <div className="container mx-auto max-w-7xl">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
               {/* Left Column - THE VISION */}
-              <div className="lg:col-span-1">
+              <div className="lg:col-span-1 order-2 lg:order-1">
                 <motion.div
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8 }}
-                  className="content-overlay max-w-md"
+                  className="content-overlay p-6 lg:p-8 max-w-lg mx-auto lg:mx-0"
                 >
-                  <h1 className="section-title text-4xl lg:text-5xl font-bold mb-4">
+                  <h1 className="section-title text-3xl lg:text-5xl font-bold mb-4">
                     THE VISION
                   </h1>
-                  <p className="text-lg text-white/80 mb-8">
+                  <p className="text-base lg:text-lg text-white/80 mb-6">
                     Privacy-first DeFi powered by AI agents
                   </p>
                   <div className="coordinate-label text-white/30 text-xs">X:1 Y:1</div>
                 </motion.div>
               </div>
 
-              {/* Right Column - Overlapping Feature Cards */}
-              <div className="lg:col-span-2 relative">
+              {/* Right Column - Feature Cards */}
+              <div className="lg:col-span-2 order-1 lg:order-2">
                 {/* Desktop: Overlapping layout */}
-                <div className="hidden lg:block relative h-[500px]">
+                <div className="hidden lg:block relative h-[400px] lg:h-[500px]">
                   {visionFeatures.map((feature, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.2 }}
-                      className={`overlay-block absolute ${
+                      className={`overlay-block absolute p-6 ${
                         index === 0 ? 'top-0 left-0' :
-                        index === 1 ? 'top-20 left-20 z-10' :
-                        'top-40 left-40 z-20'
+                        index === 1 ? 'top-16 left-16 z-10' :
+                        'top-32 left-32 z-20'
                       }`}
                     >
                       <div className="coordinate-label text-white/30 text-xs">
@@ -188,14 +188,14 @@ export default function Landing() {
                       </div>
                       <div className="flex items-center space-x-3 mb-3">
                         <feature.icon className="w-6 h-6 text-purple-400" />
-                        <h3 className="text-xl font-semibold">{feature.title}</h3>
+                        <h3 className="text-lg lg:text-xl font-semibold">{feature.title}</h3>
                       </div>
-                      <p className="text-white/70">{feature.description}</p>
+                      <p className="text-white/70 text-sm lg:text-base">{feature.description}</p>
                     </motion.div>
                   ))}
                 </div>
                 
-                {/* Mobile: Stacked layout */}
+                {/* Mobile/Tablet: Stacked layout */}
                 <div className="lg:hidden space-y-4">
                   {visionFeatures.map((feature, index) => (
                     <motion.div
@@ -203,14 +203,14 @@ export default function Landing() {
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.2 }}
-                      className="overlay-block p-4"
+                      className="overlay-block p-4 sm:p-6"
                     >
                       <div className="coordinate-label text-white/30 text-xs">
                         X:{index + 2} Y:1
                       </div>
                       <div className="flex items-center space-x-3 mb-3">
                         <feature.icon className="w-5 h-5 text-purple-400 flex-shrink-0" />
-                        <h3 className="text-lg font-semibold">{feature.title}</h3>
+                        <h3 className="text-base sm:text-lg font-semibold">{feature.title}</h3>
                       </div>
                       <p className="text-white/70 text-sm leading-relaxed">{feature.description}</p>
                     </motion.div>

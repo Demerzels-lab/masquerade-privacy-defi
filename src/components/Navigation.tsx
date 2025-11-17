@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Wallet, Github, Twitter } from 'lucide-react';
+import { Menu, X, Wallet, Github, Twitter, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { useWallet } from '../contexts/WalletContext';
 
@@ -8,14 +8,7 @@ export default function Navigation() {
   const location = useLocation();
   const { account, connectWallet, disconnectWallet, isConnecting } = useWallet();
 
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Marketplace', path: '/marketplace' },
-    { name: 'Privacy Pools', path: '/pools' },
-    { name: 'DeFi', path: '/defi' },
-    { name: 'Settings', path: '/settings' },
-  ];
+  // Removed navItems for clean navbar
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -41,23 +34,9 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-fast uppercase tracking-wider ${
-                  isActive(item.path)
-                    ? 'text-accent-500 bg-neutral-100 terminal-border'
-                    : 'text-neutral-300 hover:text-text-primary hover:terminal-border hover:bg-neutral-100/50'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-            
+          <div className="hidden md:flex items-center space-x-4">
             {/* Social Media Icons */}
-            <div className="ml-4 flex items-center space-x-3">
+            <div className="flex items-center space-x-3">
               <a
                 href="https://github.com/Demerzels-lab/masquerade-privacy-defi"
                 target="_blank"
@@ -79,7 +58,7 @@ export default function Navigation() {
             </div>
             
             {account ? (
-              <div className="ml-4 flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <div className="px-4 py-2 bg-neutral-100 rounded-md flex items-center space-x-2 terminal-border">
                   <div className="w-2 h-2 bg-semantic-success rounded-full animate-pulse-glow shadow-glow"></div>
                   <Wallet className="w-4 h-4 text-accent-500" />
@@ -96,12 +75,21 @@ export default function Navigation() {
               <button
                 onClick={connectWallet}
                 disabled={isConnecting}
-                className="ml-4 px-6 py-2 bg-accent-500/20 border border-accent-500/50 text-accent-500 rounded-md font-medium hover:bg-accent-500/30 hover:border-accent-500 transition-all duration-fast hover:shadow-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 uppercase tracking-wider"
+                className="px-6 py-2 bg-accent-500/20 border border-accent-500/50 text-accent-500 rounded-md font-medium hover:bg-accent-500/30 hover:border-accent-500 transition-all duration-fast hover:shadow-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 uppercase tracking-wider"
               >
                 <Wallet className="w-4 h-4" />
                 <span>{isConnecting ? 'CONNECTING...' : 'CONNECT WALLET'}</span>
               </button>
             )}
+            
+            {/* Entry Button to Dashboard */}
+            <Link
+              to="/dashboard"
+              className="px-6 py-2 bg-purple-500/20 border border-purple-500/50 text-purple-300 rounded-md font-medium hover:bg-purple-500/30 hover:border-purple-500 transition-all duration-fast hover:shadow-glow uppercase tracking-wider flex items-center space-x-2"
+            >
+              <span>ENTER</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -116,20 +104,17 @@ export default function Navigation() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2 border-t terminal-border mt-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 rounded-md text-sm font-medium transition-all duration-fast uppercase tracking-wider ${
-                  isActive(item.path)
-                    ? 'text-accent-500 bg-neutral-100 terminal-border'
-                    : 'text-neutral-300 hover:text-text-primary hover:bg-neutral-100/50'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {/* Entry Button to Dashboard - Mobile */}
+            <Link
+              to="/dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 bg-purple-500/20 border border-purple-500/50 text-purple-300 rounded-md text-center font-medium uppercase tracking-wider"
+            >
+              <div className="flex items-center justify-center space-x-2">
+                <span>ENTER DASHBOARD</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
             
             {/* Social Media Icons - Mobile */}
             <div className="px-4 py-3 border-t terminal-border mt-4 pt-4">
