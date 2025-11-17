@@ -181,7 +181,8 @@ export default function Landing() {
 
               {/* Right Column - Overlapping Feature Cards */}
               <div className="lg:col-span-2 relative">
-                <div className="relative h-[500px]">
+                {/* Desktop: Overlapping layout */}
+                <div className="hidden lg:block relative h-[500px]">
                   {visionFeatures.map((feature, index) => (
                     <motion.div
                       key={index}
@@ -202,6 +203,28 @@ export default function Landing() {
                         <h3 className="text-xl font-semibold">{feature.title}</h3>
                       </div>
                       <p className="text-white/70">{feature.description}</p>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                {/* Mobile: Stacked layout */}
+                <div className="lg:hidden space-y-4">
+                  {visionFeatures.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.2 }}
+                      className="overlay-block p-4"
+                    >
+                      <div className="coordinate-label text-white/30 text-xs">
+                        X:{index + 2} Y:1
+                      </div>
+                      <div className="flex items-center space-x-3 mb-3">
+                        <feature.icon className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                        <h3 className="text-lg font-semibold">{feature.title}</h3>
+                      </div>
+                      <p className="text-white/70 text-sm leading-relaxed">{feature.description}</p>
                     </motion.div>
                   ))}
                 </div>
