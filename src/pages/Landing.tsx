@@ -178,9 +178,9 @@ export default function Landing() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.2 }}
                       className={`overlay-block absolute p-8 ${
-                        index === 0 ? 'top-0 left-0 w-80' :
-                        index === 1 ? 'top-24 left-24 z-10 w-80' :
-                        'top-48 left-48 z-20 w-80'
+                        index === 0 ? 'top-20 left-0 w-80' :
+                        index === 1 ? 'bottom-36 left-60 z-10 w-80' :
+                        '-bottom-4 right-0 z-20 w-80'
                       }`}
                     >
                       <div className="coordinate-label text-white/30 text-xs">

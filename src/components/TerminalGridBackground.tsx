@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 
 const GRID_SIZE = 50; // Grid cell size in pixels
 const LINE_WIDTH = 1;
-const GRID_COLOR = 'rgba(139, 92, 246, 0.15)'; // Purple-500 with opacity
+const GRID_COLOR = 'rgba(206, 195, 231, 0.15)'; // Purple-500 with opacity
 const GLOW_COLOR = 'rgba(139, 92, 246, 0.3)'; // Stronger purple glow
 const ACCENT_GRID_COLOR = 'rgba(168, 139, 250, 0.25)'; // Purple-400 for accent lines
 
@@ -77,19 +77,19 @@ export default function TerminalGridBackground() {
       // Animate glow intensity
       node.glowIntensity = (Math.sin(time * node.glowSpeed) + 1) * 0.5;
 
-      if (node.glowIntensity > 0.7) {
-        const gradient = ctx.createRadialGradient(
-          node.x, node.y, 0,
-          node.x, node.y, 20
-        );
-        gradient.addColorStop(0, `rgba(139, 92, 246, ${node.glowIntensity * 0.5})`);
-        gradient.addColorStop(1, 'transparent');
+      // if (node.glowIntensity > 0.7) {
+      //   const gradient = ctx.createRadialGradient(
+      //     node.x, node.y, 0,
+      //     node.x, node.y, 20
+      //   );
+      //   gradient.addColorStop(0, `rgba(139, 92, 246, ${node.glowIntensity * 0.5})`);
+      //   gradient.addColorStop(1, 'transparent');
         
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, 20, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      //   ctx.fillStyle = gradient;
+      //   ctx.beginPath();
+      //   ctx.arc(node.x, node.y, 20, 0, Math.PI * 2);
+      //   ctx.fill();
+      // }
     });
   };
 
